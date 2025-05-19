@@ -22,6 +22,17 @@ export default function Cadastro() {
   const [senha, setSenha] = useState("");
 
   const handleCadastro = async () => {
+    if (
+      !nome.trim() ||
+      !cpf.trim() ||
+      !telefone.trim() ||
+      !num_sus.trim() ||
+      !email.trim() ||
+      !senha.trim()
+    ) {
+      Alert.alert("Erro", "Por favor, preencha todos os campos.");
+      return; // Não continua o envio se algum campo estiver vazio
+    }
     try {
       const response = await fetch(
         "http://192.168.0.72:3000/pacientes/cadastro",
@@ -53,6 +64,7 @@ export default function Cadastro() {
       Alert.alert("Erro", "Não foi possível conectar ao servidor.");
     }
   };
+  const [mostrarSenha, setMostrarSenha] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -70,18 +82,24 @@ export default function Cadastro() {
         placeholder="CPF"
         value={cpf}
         onChangeText={setCpf}
+        keyboardType="numeric"
+        maxLength={11}
       />
       <TextInput
         style={styles.input}
         placeholder="Telefone"
         value={telefone}
         onChangeText={setTelefone}
+        keyboardType="numeric"
+        maxLength={11}
       />
       <TextInput
         style={styles.input}
         placeholder="Número do SUS"
         value={num_sus}
         onChangeText={setNumSus}
+        keyboardType="numeric"
+        maxLength={15}
       />
       <TextInput
         style={styles.input}
@@ -90,13 +108,28 @@ export default function Cadastro() {
         onChangeText={setEmail}
         keyboardType="email-address"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        value={senha}
-        onChangeText={setSenha}
-        secureTextEntry
-      />
+      <View style={styles.inputSenha}>
+        <TextInput
+          placeholder="Senha"
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry={!mostrarSenha}
+        />
+        <TouchableOpacity
+          style={styles.mostrarSenha}
+          onPress={() => setMostrarSenha(!mostrarSenha)}
+        >
+          <Image
+            style={styles.icon}
+            source={
+              mostrarSenha
+                ? require("../assets/view.png")
+                : require("../assets/view-off.png")
+            }
+          />
+        </TouchableOpacity>
+      </View>
+
       <TouchableOpacity style={styles.btn} onPress={handleCadastro}>
         <Text style={styles.btnText}>Cadastrar-se</Text>
       </TouchableOpacity>
@@ -134,6 +167,25 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 50,
+  },
+  inputSenha: {
+    height: 40,
+    backgroundColor: "#fff",
+    width: "100%",
+    height: 48,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    borderRadius: 50,
+  },
+  mostrarSenha: {
+    position: "absolute",
+    top: 14,
+    left: "95%",
+  },
+
+  icon: {
+    width: 20,
+    height: 20,
   },
   btn: {
     width: "100%",
