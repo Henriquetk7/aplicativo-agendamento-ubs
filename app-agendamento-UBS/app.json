@@ -3,6 +3,7 @@
     "name": "app-agendamento-UBS",
     "slug": "app-agendamento-UBS",
     "version": "1.0.0",
+    "scheme": "app-agendamento-UBS",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -23,7 +24,9 @@
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": ["expo-router"]
   }
 }
