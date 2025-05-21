@@ -73,15 +73,3 @@ app.get("/", async (req, res) => {
 app.listen(process.env.PORT, "192.168.0.72", () => {
   console.log("App is running!");
 });
-
-// app.post("/clientes", async (req, res) => {
-//   const customer = req.body; //Corpo da requisicao
-//   await db.insertCustomer(customer);
-//   res.sendStatus(201);
-// });
-
-// app.get("/clientes/:id", async (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const results = await db.selectCustomer(id);
-//   res.json(results);
-// });

@@ -45,7 +45,7 @@ async function loginPaciente(email, senha) {
 
     return {
       success: true,
-      message: "Login bem-sucedido.",
+      // message: "Login bem-sucedido.",
       paciente: {
         id: paciente.id_paciente,
         nome: paciente.nome,
@@ -111,10 +111,31 @@ async function pacientesDoDia(id) {
     JOIN 
     pacientes p ON ap.id_paciente = p.id_paciente
     WHERE 
-    p.id_paciente = ?;`
+    p.id_paciente = ?;`,
+    [id]
   );
   return rows[0];
 }
+
+// async function novoAgendamento(id_posto_saude, posto) {
+//   const values = [
+//     id_posto_saude,
+//     posto.tipo_atendimento,
+//     posto.data_agendada,
+//     posto.hora_agendada,
+//     posto.quantidade_fichas,
+//   ];
+//   try {
+//     await client.query(
+//       `INSERT INTO agendamentos (id_posto_saude, tipo_atendimento, data_agendada, hora_agendada, quantidade_fichas) VALUES (?, ?, ?, ?, ?)`,
+//       values
+//     );
+//     return { success: true, message: "Agendamento criado com sucesso!" };
+//   } catch (error) {
+//     console.error("Erro ao criar agendamento:", error);
+//     return { success: false, message: "Erro ao criar agendamento." };
+//   }
+// }
 
 module.exports = {
   cadastroPaciente,

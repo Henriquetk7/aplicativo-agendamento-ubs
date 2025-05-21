@@ -55,7 +55,7 @@ export default function Cadastro() {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert("Sucesso", data.message);
+        router.replace("/login");
       } else {
         Alert.alert("Erro", data.message || "Erro ao cadastrar paciente");
       }

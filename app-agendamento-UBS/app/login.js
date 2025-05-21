@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
   const router = useRouter();
@@ -33,7 +34,8 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert("Sucesso", data.message);
+        await AsyncStorage.setItem("paciente", JSON.stringify(data.paciente));
+        router.replace("/(tabs)/inicio"); // ou "/(tabs)/inicio"
       } else {
         Alert.alert("Erro", data.message || "Erro ao fazer login");
       }
@@ -42,6 +44,7 @@ export default function Login() {
       Alert.alert("Erro", "Não foi possível conectar ao servidor.");
     }
   };
+  const [mostrarSenha, setMostrarSenha] = useState(false);
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -59,8 +62,22 @@ export default function Login() {
         placeholder="Senha"
         value={senha}
         onChangeText={setSenha}
-        secureTextEntry
+        secureTextEntry={!mostrarSenha}
       />
+      <TouchableOpacity
+        style={styles.mostrarSenha}
+        onPress={() => setMostrarSenha(!mostrarSenha)}
+      >
+        <Image
+          style={styles.icon}
+          source={
+            mostrarSenha
+              ? require("../assets/view.png")
+              : require("../assets/view-off.png")
+          }
+        />
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.btn} onPress={handleLogin}>
         <Text style={styles.btnText}>Entrar</Text>
       </TouchableOpacity>
@@ -100,6 +117,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 50,
+  },
+
+  icon: {
+    width: 20,
+    height: 20,
+  },
+
+  mostrarSenha: {
+    position: "relative",
+    top: -44,
+    left: "92%",
   },
   btn: {
     width: "100%",

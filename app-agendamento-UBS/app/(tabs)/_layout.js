@@ -4,25 +4,25 @@ export default function TabsLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="index"
+        name="inicio"
         options={{
           headerShown: false,
           title: "Inicio",
         }}
       />
       <Tabs.Screen
-        name="perfil"
+        name="agendar"
         options={{
           headerShown: false,
-          title: "Perfil",
+          title: "Agendar",
         }}
       />
 
       <Tabs.Screen
-        name="configuracao"
+        name="perfil"
         options={{
           headerShown: false,
-          title: "Configuração",
+          title: "Perfil",
         }}
       />
     </Tabs>
