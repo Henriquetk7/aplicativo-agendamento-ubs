@@ -8,16 +8,19 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 
-export default function ListaPostos() {
+export default function ListaPostos({ onPressPosto }) {
   const [postos_saude, setPostos_saude] = useState([]);
 
   const buscarPostos = async () => {
     try {
-      const response = await fetch("http://192.168.0.72:3000/");
+      const response = await fetch("http://192.168.0.40:3000/");
+      if (!response.ok) {
+        throw new Error(`Erro na resposta: ${response.status}`);
+      }
       const data = await response.json();
       setPostos_saude(data);
     } catch (error) {
-      console.error("Erro ao buscar postos: ", error);
+      console.error("Erro ao buscar postos: ", error.message);
     }
   };
 
@@ -32,7 +35,13 @@ export default function ListaPostos() {
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       renderItem={({ item }) => (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity
+          style={styles.container}
+          onPress={() => {
+            console.log("Clicou no posto com ID:", item.id_posto_saude);
+            onPressPosto(item.id_posto_saude);
+          }}
+        >
           <View style={styles.listItem}>
             <View style={styles.circle}>
               <Image
@@ -74,7 +83,7 @@ const styles = StyleSheet.create({
     height: 32,
     borderWidth: 1,
     borderColor: "#016DFF",
-    borderRadius: "50%",
+    borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
   },

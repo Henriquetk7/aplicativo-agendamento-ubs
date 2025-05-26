@@ -1,68 +1,54 @@
 require("dotenv").config();
-
 const express = require("express");
-const bcrypt = require("bcrypt");
 const db = require("./db");
 
 const app = express();
-
 app.use(express.json());
 
-app.post("/pacientes/login", async (req, res) => {
-  const { email, senha } = req.body;
-
-  try {
-    const resultado = await db.loginPaciente(email, senha);
-
-    if (!resultado.success) {
-      return res.status(401).json({ message: resultado.message });
-    }
-
-    return res.status(200).json({
-      message: resultado.message,
-      paciente: resultado.paciente,
-    });
-  } catch (error) {
-    console.error("Erro no login:", error);
-    res.status(500).json({ message: "Erro interno no servidor." });
-  }
-});
-
-app.post("/pacientes/cadastro", async (req, res) => {
-  const paciente = req.body;
-  const results = await db.cadastroPaciente(paciente);
-
-  if (!results.success) {
-    return res.status(400).json({ message: "Erro ao cadastrar." });
-  }
-
-  return res.status(201).json({ message: "Cadastrado com sucesso." });
-});
-
+//WEB ADMIN
 app.post("/postos/login", async (req, res) => {
   const { email, senha } = req.body;
+  const resultado = await db.loginPosto(email, senha);
+  if (!resultado.success)
+    return res.status(401).json({ message: resultado.message });
+  res.status(200).json({ posto: resultado.posto });
+});
 
+//APP MOBILE
+app.get("/postos/:id", async (req, res) => {
   try {
-    const resultado = await db.loginPosto(email, senha);
-
-    if (!resultado.success) {
-      return res.status(401).json({ message: resultado.message });
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+      return res.status(400).json({ message: "ID inválido" });
     }
 
-    return res.status(200).json({
-      message: resultado.message,
-      posto: resultado.posto,
-    });
+    const posto = await db.selectPostosId(id);
+
+    if (!posto) {
+      return res.status(404).json({ message: "Posto não encontrado" });
+    }
+
+    res.json(posto);
   } catch (error) {
-    console.error("Erro no login:", error);
-    res.status(500).json({ message: "Erro interno no servidor." });
+    console.error("Erro no GET /postos/:id", error);
+    res.status(500).json({ message: "Erro interno do servidor" });
   }
 });
 
-app.get("postos/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
-  const results = await db.selectPostosId(id);
-  res.json(results);
+app.post("/login", async (req, res) => {
+  const { email, senha } = req.body;
+  const resultado = await db.loginPaciente(email, senha);
+  if (!resultado.success)
+    return res.status(401).json({ message: resultado.message });
+  res.status(200).json({ paciente: resultado.paciente });
+});
+
+app.post("/cadastro", async (req, res) => {
+  const paciente = req.body;
+  const results = await db.cadastroPaciente(paciente);
+  if (!results.success)
+    return res.status(400).json({ message: results.message });
+  res.status(201).json({ message: "Cadastrado com sucesso." });
 });
 
 app.get("/", async (req, res) => {
@@ -70,6 +56,6 @@ app.get("/", async (req, res) => {
   res.json(results);
 });
 
-app.listen(process.env.PORT, "192.168.0.72", () => {
+app.listen(process.env.PORT, "192.168.0.40", () => {
   console.log("App is running!");
 });

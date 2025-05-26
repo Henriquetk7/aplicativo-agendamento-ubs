@@ -21,6 +21,12 @@ export default function RootLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="posto/[id]"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

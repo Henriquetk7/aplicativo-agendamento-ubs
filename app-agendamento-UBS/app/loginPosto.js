@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Login() {
+export default function LoginPosto() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://192.168.0.40:3000/login", {
+      const response = await fetch("http://192.168.0.40:3000/postos/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,8 +34,9 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        await AsyncStorage.setItem("paciente", JSON.stringify(data.paciente));
-        router.replace("/(tabs)/inicio");
+        // await AsyncStorage.setItem("token", data.token);
+        await AsyncStorage.setItem("posto", JSON.stringify(data.posto));
+        // router.replace("/(tabs)/inicio");
       } else {
         Alert.alert("Erro", data.message || "Erro ao fazer login");
       }
@@ -49,7 +50,7 @@ export default function Login() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Image style={styles.img} source={require("../assets/logo-1.png")} />
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Login Posto</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -82,13 +83,8 @@ export default function Login() {
         <Text style={styles.btnText}>Entrar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.replace("/cadastro")}>
-        <Text style={styles.linkCadastro}>
-          Ainda não tem conta? Cadastrar-se
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.replace("/loginPosto")}>
-        <Text style={styles.linkCadastro}>Login posto</Text>
+      <TouchableOpacity onPress={() => router.replace("/login")}>
+        <Text style={styles.linkCadastro}>Login paciente</Text>
       </TouchableOpacity>
     </View>
   );
@@ -119,7 +115,7 @@ const styles = StyleSheet.create({
     height: 48,
     marginBottom: 10,
     paddingHorizontal: 10,
-    borderRadius: 16,
+    borderRadius: 50,
   },
 
   icon: {

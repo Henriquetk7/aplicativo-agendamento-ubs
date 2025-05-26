@@ -1,15 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Alert,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 
@@ -34,6 +25,7 @@ export default function Inicio() {
   }, []);
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
       <Text style={styles.userName}>Olá, {nomePaciente}</Text>
       <View style={styles.section}>
         <Text style={styles.titleSection}>Seus agendamentos</Text>
@@ -43,7 +35,7 @@ export default function Inicio() {
       </View>
       <View style={styles.section}>
         <Text style={styles.titleSection}>Postos de saúde próximos</Text>
-        <ListaPostos />
+        <ListaPostos onPressPosto={(id) => router.push(`../posto/${id}`)} />
       </View>
     </View>
   );
@@ -51,11 +43,11 @@ export default function Inicio() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 48,
+    marginTop: 64,
     padding: 16,
   },
   userName: {
-    fontSize: 20,
+    fontSize: 16,
   },
   section: {
     gap: 12,
