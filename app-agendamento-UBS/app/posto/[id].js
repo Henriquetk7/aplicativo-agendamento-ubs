@@ -19,7 +19,7 @@ export default function DetalhesPosto() {
   useEffect(() => {
     console.log("ID recebido:", id);
 
-    fetch(`http://192.168.0.40:3000/postos/${id}`)
+    fetch(`http://192.168.85.166:3000/detalhesPosto/${id}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Dados recebidos:", data);
@@ -35,8 +35,7 @@ export default function DetalhesPosto() {
   if (loading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#00f" />
-        <Text>Carregando...</Text>
+        <ActivityIndicator size="large" color="#016DFF" />
       </View>
     );
   }

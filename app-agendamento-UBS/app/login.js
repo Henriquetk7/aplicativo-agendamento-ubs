@@ -7,6 +7,9 @@ import {
   Alert,
   Image,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
@@ -20,7 +23,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://192.168.0.40:3000/login", {
+      const response = await fetch("http://192.168.85.166:3000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,6 +38,7 @@ export default function Login() {
 
       if (response.ok) {
         await AsyncStorage.setItem("paciente", JSON.stringify(data.paciente));
+
         router.replace("/(tabs)/inicio");
       } else {
         Alert.alert("Erro", data.message || "Erro ao fazer login");
@@ -44,57 +48,69 @@ export default function Login() {
       Alert.alert("Erro", "Não foi possível conectar ao servidor.");
     }
   };
+
   const [mostrarSenha, setMostrarSenha] = useState(false);
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Image style={styles.img} source={require("../assets/logo-1.png")} />
-      <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        value={senha}
-        onChangeText={setSenha}
-        secureTextEntry={!mostrarSenha}
-      />
-      <TouchableOpacity
-        style={styles.mostrarSenha}
-        onPress={() => setMostrarSenha(!mostrarSenha)}
-      >
-        <Image
-          style={styles.icon}
-          source={
-            mostrarSenha
-              ? require("../assets/view.png")
-              : require("../assets/view-off.png")
-          }
-        />
-      </TouchableOpacity>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.container}>
+          <StatusBar style="auto" />
+          <Image style={styles.img} source={require("../assets/logo-1.png")} />
+          <Text style={styles.title}>Login</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Senha"
+            value={senha}
+            onChangeText={setSenha}
+            secureTextEntry={!mostrarSenha}
+          />
+          <TouchableOpacity
+            style={styles.mostrarSenha}
+            onPress={() => setMostrarSenha(!mostrarSenha)}
+          >
+            <Image
+              style={styles.icon}
+              source={
+                mostrarSenha
+                  ? require("../assets/view.png")
+                  : require("../assets/view-off.png")
+              }
+            />
+          </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btn} onPress={handleLogin}>
-        <Text style={styles.btnText}>Entrar</Text>
-      </TouchableOpacity>
+          <TouchableOpacity style={styles.btn} onPress={handleLogin}>
+            <Text style={styles.btnText}>Entrar</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.replace("/cadastro")}>
-        <Text style={styles.linkCadastro}>
-          Ainda não tem conta? Cadastrar-se
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.replace("/loginPosto")}>
-        <Text style={styles.linkCadastro}>Login posto</Text>
-      </TouchableOpacity>
-    </View>
+          <TouchableOpacity onPress={() => router.replace("/cadastro")}>
+            <Text style={styles.linkCadastro}>
+              Ainda não tem conta? Cadastrar-se
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.replace("/loginPosto")}>
+            <Text style={styles.linkCadastro}>Login posto</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: "#F0F1F2",
@@ -138,7 +154,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#016DFF",
     justifyContent: "center",
     borderRadius: 50,
-    marginTop: 32,
   },
 
   btnText: {

@@ -20,7 +20,7 @@ export default function LoginPosto() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://192.168.0.40:3000/postos/login", {
+      const response = await fetch("http://192.168.85.166:3000/posto/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

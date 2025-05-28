@@ -13,7 +13,7 @@ export default function ListaPostos({ onPressPosto }) {
 
   const buscarPostos = async () => {
     try {
-      const response = await fetch("http://192.168.0.40:3000/");
+      const response = await fetch("http://192.168.85.166:3000/");
       if (!response.ok) {
         throw new Error(`Erro na resposta: ${response.status}`);
       }
@@ -38,7 +38,6 @@ export default function ListaPostos({ onPressPosto }) {
         <TouchableOpacity
           style={styles.container}
           onPress={() => {
-            console.log("Clicou no posto com ID:", item.id_posto_saude);
             onPressPosto(item.id_posto_saude);
           }}
         >
