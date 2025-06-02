@@ -1,14 +1,34 @@
 const mysql = require("mysql2/promise");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const client = mysql.createPool(process.env.CONNECTION_STRING);
-
-const SECRET = process.env.JWT_SECRET;
 
 // ==========================
 // WEB ADMIN
 // ==========================
+async function cadastroPosto(posto) {
+  const hashedPassword = await bcrypt.hash(paciente.senha, 10);
+  const values = [
+    posto.nome,
+    posto.endereco,
+    paciente.horario_funcionamento,
+    paciente.telefone,
+    paciente.email,
+    hashedPassword,
+  ];
+  try {
+    await client.query(
+      `INSERT INTO postos_saude (nome, endereco, horario_funcionamento, telefone, email, senha) VALUES (?, ?, ?, ?, ?, ?)`,
+      values
+    );
+
+    return { success: true, message: "Posto de saúde cadastrado com sucesso." };
+  } catch (error) {
+    console.error("Erro ao cadastrar posto de saúde:", error);
+    return { success: false, message: "Erro ao cadastrar posto de saúde." };
+  }
+}
+
 async function loginPosto(email, senha) {
   try {
     const [rows] = await client.query(
@@ -26,15 +46,6 @@ async function loginPosto(email, senha) {
     if (!senhaCorreta) {
       return { success: false, message: "Senha incorreta." };
     }
-
-    const token = jwt.sign(
-      {
-        id_posto_saude: posto.id_posto_saude,
-        email: posto.email,
-      },
-      SECRET,
-      { expiresIn: "8h" }
-    );
 
     return {
       success: true,
@@ -137,15 +148,6 @@ async function loginPaciente(email, senha) {
       return { success: false, message: "Senha incorreta." };
     }
 
-    const token = jwt.sign(
-      {
-        id_paciente: paciente.id_paciente,
-        email: paciente.email,
-      },
-      SECRET,
-      { expiresIn: "1h" }
-    );
-
     return {
       success: true,
       paciente: {
@@ -153,7 +155,6 @@ async function loginPaciente(email, senha) {
         nome: paciente.nome,
         email: paciente.email,
       },
-      token,
     };
   } catch (error) {
     console.error("Erro ao fazer login:", error);
@@ -170,13 +171,13 @@ async function getPostos() {
 
 async function getPostosId(id_posto_saude) {
   const [rows] = await client.query(
-    `SELECT nome, endereco, horario_funcionamento, telefone FROM postos_saude WHERE id_posto_saude = ?`,
+    `SELECT nome, endereco, horario_funcionamento, telefone, email FROM postos_saude WHERE id_posto_saude = ?`,
     [id_posto_saude]
   );
   return rows[0];
 }
 
-async function getTiposAtendimentoAgendamento(id_posto_saude) {
+async function getTiposAtendimentosAgendamento(id_posto_saude) {
   try {
     const [rows] = await client.query(
       `SELECT DISTINCT ta.id_tipo_atendimento, ta.descricao
@@ -215,7 +216,19 @@ async function getDataHoraAgendamento(id_posto_saude, id_tipo_atendimento) {
 
 async function insertAgendamentoPaciente(data) {
   const values = [data.id_agendamento, data.id_paciente];
+
   try {
+    // 1. Verificar se já existe agendamento
+    const [verifica] = await client.query(
+      `SELECT * FROM agendamentos_pacientes WHERE id_agendamento = ? AND id_paciente = ?`,
+      values
+    );
+
+    if (verifica.length > 0) {
+      return { success: false, message: "Você já agendou esse horário." };
+    }
+
+    // 2. Inserir se ainda não existir
     await client.query(
       `INSERT INTO agendamentos_pacientes (id_agendamento, id_paciente) VALUES (?, ?)`,
       values
@@ -228,10 +241,37 @@ async function insertAgendamentoPaciente(data) {
   }
 }
 
+async function getHorariosComFichas(id_posto_saude, id_tipo_atendimento) {
+  try {
+    const [rows] = await client.query(
+      `
+      SELECT 
+        a.id_agendamento,
+        a.data_hora_agendamento,
+        a.quantidade_fichas,
+        (
+          SELECT COUNT(*) 
+          FROM agendamentos_pacientes ap 
+          WHERE ap.id_agendamento = a.id_agendamento
+        ) AS fichas_usadas
+      FROM agendamentos a
+      WHERE a.id_posto_saude = ? AND a.id_tipo_atendimento = ?
+      `,
+      [id_posto_saude, id_tipo_atendimento]
+    );
+
+    return rows;
+  } catch (error) {
+    console.error("Erro no getHorariosComFichas:", error);
+    return [];
+  }
+}
+
 // ==========================
 // EXPORT
 // ==========================
 module.exports = {
+  cadastroPosto,
   loginPosto,
   pacientesDoDia,
   criarAgendamento,
@@ -239,7 +279,8 @@ module.exports = {
   cadastroPaciente,
   getPostos,
   getPostosId,
-  getTiposAtendimentoAgendamento,
+  getTiposAtendimentosAgendamento,
   getDataHoraAgendamento,
   insertAgendamentoPaciente,
+  getHorariosComFichas,
 };

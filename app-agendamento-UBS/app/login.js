@@ -62,7 +62,7 @@ export default function Login() {
           <Text style={styles.title}>Login</Text>
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder="E-mail"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"

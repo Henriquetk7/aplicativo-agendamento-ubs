@@ -27,6 +27,18 @@ export default function RootLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="posto/agendamento"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="posto/resumo"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

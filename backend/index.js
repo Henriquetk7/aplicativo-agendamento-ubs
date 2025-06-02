@@ -68,25 +68,100 @@ app.post("/cadastro", async (req, res) => {
   res.status(201).json({ message: "Cadastrado com sucesso." });
 });
 
-// 🔍 Tipos de atendimento de um posto
-app.get("/tipos/:idPosto", async (req, res) => {
+app.get(
+  "/horariosAgendamentoComFichas/:id_posto_saude/:id_tipo_atendimento",
+  async (req, res) => {
+    const id_posto_saude = parseInt(req.params.id_posto_saude);
+    const id_tipo_atendimento = parseInt(req.params.id_tipo_atendimento);
+
+    if (isNaN(id_posto_saude) || isNaN(id_tipo_atendimento)) {
+      return res.status(400).json({ message: "Parâmetros inválidos" });
+    }
+
+    try {
+      const horarios = await db.getHorariosComFichas(
+        id_posto_saude,
+        id_tipo_atendimento
+      );
+
+      if (!horarios || horarios.length === 0) {
+        return res.status(404).json({ message: "Nenhum horário disponível" });
+      }
+
+      res.json(horarios);
+    } catch (error) {
+      console.error("Erro ao buscar horários com fichas:", error);
+      res.status(500).json({ message: "Erro interno ao buscar horários." });
+    }
+  }
+);
+
+app.post("/agendar", async (req, res) => {
   try {
-    const id = parseInt(req.params.idPosto);
+    const { id_agendamento, id_paciente } = req.body;
+
+    if (!id_agendamento || !id_paciente) {
+      return res.status(400).json({ message: "Dados incompletos" });
+    }
+
+    const resultado = await db.insertAgendamentoPaciente({
+      id_agendamento,
+      id_paciente,
+    });
+
+    res.status(resultado.success ? 200 : 500).json(resultado);
+  } catch (error) {
+    console.error("Erro no POST /agendar", error);
+    res.status(500).json({ message: "Erro interno do servidor" });
+  }
+});
+
+app.get(
+  "/horariosAgendamento/:id_posto_saude/:id_tipo_atendimento",
+  async (req, res) => {
+    try {
+      const id_posto = parseInt(req.params.id_posto_saude);
+      const id_tipo = parseInt(req.params.id_tipo_atendimento);
+
+      if (isNaN(id_posto) || isNaN(id_tipo)) {
+        return res.status(400).json({ message: "IDs inválidos" });
+      }
+
+      const horarios = await db.getDataHoraAgendamento(id_posto, id_tipo);
+
+      if (!horarios || horarios.length === 0) {
+        return res.status(404).json({ message: "Nenhum horário disponível" });
+      }
+
+      res.json(horarios);
+    } catch (error) {
+      console.error(
+        "Erro no GET /horariosAgendamento/:id_posto_saude/:id_tipo_atendimento",
+        error
+      );
+      res.status(500).json({ message: "Erro interno do servidor" });
+    }
+  }
+);
+
+app.get("/tiposAtendimento/:id_posto_saude", async (req, res) => {
+  try {
+    const id = parseInt(req.params.id_posto_saude);
     if (isNaN(id)) {
       return res.status(400).json({ message: "ID inválido" });
     }
 
-    const tipos = await db.getTiposAtendimentoAgendamento(id);
+    const tipos = await db.getTiposAtendimentosAgendamento(id);
 
-    if (!tipos) {
+    if (!tipos || tipos.length === 0) {
       return res
         .status(404)
-        .json({ message: "Tipos de atendimento não encontrados" });
+        .json({ message: "Nenhum tipo de atendimento encontrado" });
     }
 
     res.json(tipos);
   } catch (error) {
-    console.error("Erro no GET /tipos/:idPosto", error);
+    console.error("Erro no GET /tiposAtendimento/:id_posto_saude", error);
     res.status(500).json({ message: "Erro interno do servidor" });
   }
 });

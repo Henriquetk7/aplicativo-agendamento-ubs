@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -68,7 +68,7 @@ export default function DetalhesPosto() {
             />
             <View>
               <Text style={styles.text}>Horário de funcionamento:</Text>
-              <Text style={styles.textInfo}>88888</Text>
+              <Text style={styles.textInfo}>{posto.horario_funcionamento}</Text>
             </View>
           </View>
           <View style={styles.cardInfo}>
@@ -88,14 +88,26 @@ export default function DetalhesPosto() {
             />
             <View>
               <Text style={styles.text}>Telefone:</Text>
-              <Text style={styles.textInfo}>5456456456</Text>
+              <Text style={styles.textInfo}>{posto.telefone}</Text>
+            </View>
+          </View>
+          <View style={styles.cardInfo}>
+            <Image
+              style={styles.icon}
+              source={require("../../assets/email-icon.png")}
+            />
+            <View>
+              <Text style={styles.text}>E-mail:</Text>
+              <Text style={styles.textInfo}>{posto.email}</Text>
             </View>
           </View>
         </View>
       </View>
       <TouchableOpacity
         style={styles.btn}
-        onPress={() => router.push("/agendamento")}
+        onPress={() =>
+          router.push({ pathname: "/posto/agendamento", params: { id: id } })
+        }
       >
         <Text style={styles.btnText}>Iniciar agendamento</Text>
       </TouchableOpacity>
@@ -144,6 +156,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#808080",
     marginBottom: 16,
+    width: 344,
   },
   btn: {
     width: "100%",

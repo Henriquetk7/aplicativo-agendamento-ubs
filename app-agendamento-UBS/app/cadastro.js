@@ -78,7 +78,7 @@ export default function Cadastro() {
           <Text style={styles.title}>Cadastre-se</Text>
           <TextInput
             style={styles.input}
-            placeholder="Nome"
+            placeholder="Nome completo"
             value={nome}
             onChangeText={setNome}
           />
@@ -100,15 +100,16 @@ export default function Cadastro() {
           />
           <TextInput
             style={styles.input}
-            placeholder="Número do SUS"
+            placeholder="Cartâo do SUS"
             value={num_sus}
             onChangeText={setNumSus}
             keyboardType="numeric"
+            minlength={15}
             maxLength={15}
           />
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder="E-mail"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"

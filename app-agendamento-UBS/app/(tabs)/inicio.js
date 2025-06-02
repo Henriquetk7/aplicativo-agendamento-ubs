@@ -60,7 +60,7 @@ export default function Inicio() {
           </View>
           <View style={[styles.section, styles.sectionFaq]}>
             <Text style={[styles.titleSection, styles.titleFaq]}>
-              O que está procurando?
+              O que você está procurando?
             </Text>
             <TouchableOpacity style={styles.containerCardFaq}>
               <View style={styles.cardFaq}>
@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 16,
+    fontWeight: "bold",
   },
   section: {
     marginBottom: 32,
