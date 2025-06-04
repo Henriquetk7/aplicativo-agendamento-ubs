@@ -6,10 +6,9 @@ const app = express();
 app.use(express.json());
 
 // =======================
-// 🎯 WEB ADMIN - ROTAS
+// WEB ADMIN - ROTAS
 // =======================
 
-// 🔑 Login do posto (gera token)
 app.post("/posto/login", async (req, res) => {
   const { email, senha } = req.body;
   const resultado = await db.loginPosto(email, senha);
@@ -22,7 +21,6 @@ app.post("/posto/login", async (req, res) => {
   });
 });
 
-// ➕ Criar agendamento (protegido)
 app.post("/posto/agendamentos", async (req, res) => {
   const { id_tipo_atendimento, data_hora_agendamento, quantidade_fichas } =
     req.body;
@@ -43,22 +41,18 @@ app.post("/posto/agendamentos", async (req, res) => {
 });
 
 // =======================
-// 🎯 APP MOBILE - ROTAS
+// APP MOBILE - ROTAS
 // =======================
 
-// 🔐 Login Paciente (gera token)
 app.post("/login", async (req, res) => {
   const { email, senha } = req.body;
   const resultado = await db.loginPaciente(email, senha);
   if (!resultado.success)
     return res.status(401).json({ message: resultado.message });
 
-  res.status(200).json({
-    paciente: resultado.paciente,
-  });
+  return res.json(resultado.paciente);
 });
 
-// ➕ Cadastro Paciente
 app.post("/cadastro", async (req, res) => {
   const paciente = req.body;
   const results = await db.cadastroPaciente(paciente);
@@ -66,6 +60,26 @@ app.post("/cadastro", async (req, res) => {
     return res.status(400).json({ message: results.message });
 
   res.status(201).json({ message: "Cadastrado com sucesso." });
+});
+
+app.get("/meusAgendamentos/:id_paciente", async (req, res) => {
+  const id_paciente = parseInt(req.params.id_paciente);
+  if (isNaN(id_paciente)) {
+    return res.status(400).json({ message: "ID inválido" });
+  }
+
+  try {
+    const agendamentos = await db.getAgendamentoPaciente(id_paciente);
+
+    if (!agendamentos || agendamentos.length === 0) {
+      return res.status(404).json({ message: "Nenhum agendamento encontrado" });
+    }
+
+    res.json(agendamentos);
+  } catch (error) {
+    console.error("Erro ao buscar agendamentos:", error);
+    res.status(500).json({ message: "Erro interno ao buscar agendamentos." });
+  }
 });
 
 app.get(

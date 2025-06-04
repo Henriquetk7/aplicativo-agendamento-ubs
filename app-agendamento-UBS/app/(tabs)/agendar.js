@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Text } from "react-native";
 import { useRouter } from "expo-router";
-import ListaPostos from "../../components/ListaPostos";
+import ListaPostos from "../shared/components/ListaPostos";
 
 export default function Agendar() {
   const router = useRouter();

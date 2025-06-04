@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import ButtonComponent from "../shared/components/ButtonComponent";
 
 export default function DetalhesPosto() {
   const { id } = useLocalSearchParams();
@@ -103,14 +104,12 @@ export default function DetalhesPosto() {
           </View>
         </View>
       </View>
-      <TouchableOpacity
-        style={styles.btn}
+      <ButtonComponent
         onPress={() =>
           router.push({ pathname: "/posto/agendamento", params: { id: id } })
         }
-      >
-        <Text style={styles.btnText}>Iniciar agendamento</Text>
-      </TouchableOpacity>
+        title="Iniciar agendamento"
+      />
     </View>
   );
 }

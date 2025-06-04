@@ -164,7 +164,7 @@ async function loginPaciente(email, senha) {
 
 async function getPostos() {
   const [rows] = await client.query(
-    `SELECT id_posto_saude, nome FROM postos_saude;`
+    `SELECT id_posto_saude, nome, endereco FROM postos_saude;`
   );
   return rows;
 }
@@ -183,7 +183,8 @@ async function getTiposAtendimentosAgendamento(id_posto_saude) {
       `SELECT DISTINCT ta.id_tipo_atendimento, ta.descricao
        FROM agendamentos a
        JOIN tipos_atendimento ta ON a.id_tipo_atendimento = ta.id_tipo_atendimento
-       WHERE a.id_posto_saude = ?;`,
+       WHERE a.id_posto_saude = ?
+       ORDER BY ta.descricao ASC;`,
       [id_posto_saude]
     );
     return rows;
@@ -218,7 +219,6 @@ async function insertAgendamentoPaciente(data) {
   const values = [data.id_agendamento, data.id_paciente];
 
   try {
-    // 1. Verificar se já existe agendamento
     const [verifica] = await client.query(
       `SELECT * FROM agendamentos_pacientes WHERE id_agendamento = ? AND id_paciente = ?`,
       values
@@ -228,7 +228,6 @@ async function insertAgendamentoPaciente(data) {
       return { success: false, message: "Você já agendou esse horário." };
     }
 
-    // 2. Inserir se ainda não existir
     await client.query(
       `INSERT INTO agendamentos_pacientes (id_agendamento, id_paciente) VALUES (?, ?)`,
       values
@@ -267,6 +266,22 @@ async function getHorariosComFichas(id_posto_saude, id_tipo_atendimento) {
   }
 }
 
+async function getAgendamentoPaciente(id_paciente) {
+  const [rows] = await client.query(
+    `SELECT
+  a.data_hora_agendamento AS data_hora,
+  ta.descricao AS tipo_atendimento,
+  ps.nome AS posto_saude
+FROM agendamentos_pacientes ap
+JOIN agendamentos a ON ap.id_agendamento = a.id_agendamento
+JOIN tipos_atendimento ta ON a.id_tipo_atendimento = ta.id_tipo_atendimento
+JOIN postos_saude ps ON a.id_posto_saude = ps.id_posto_saude
+WHERE ap.id_paciente = ?;`,
+    [id_paciente]
+  );
+  return rows;
+}
+
 // ==========================
 // EXPORT
 // ==========================
@@ -283,4 +298,5 @@ module.exports = {
   getDataHoraAgendamento,
   insertAgendamentoPaciente,
   getHorariosComFichas,
+  getAgendamentoPaciente,
 };

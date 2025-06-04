@@ -8,29 +8,18 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
-
-import ListaPostos from "../../components/ListaPostos";
+import ListaPostos from "../shared/components/ListaPostos.js";
+import { usePacienteStore } from "../../store/usePacienteStore.js";
+import { usePaciente } from "../../hooks/usePaciente.js";
 
 export default function Inicio() {
   const router = useRouter();
-  const [nomePaciente, setNomePaciente] = useState("");
-
-  useEffect(() => {
-    const buscarPaciente = async () => {
-      const pacienteJson = await AsyncStorage.getItem("paciente");
-      if (pacienteJson) {
-        const paciente = JSON.parse(pacienteJson);
-        const nomes = paciente.nome.split(" ");
-        const primeirosDois = nomes.slice(0, 2).join(" ");
-        setNomePaciente(primeirosDois);
-      }
-    };
-
-    buscarPaciente();
-  }, []);
+  const paciente = usePaciente();
+  const nomePaciente = paciente?.nome?.split(" ").slice(0, 2).join(" ") || "";
 
   return (
     <SafeAreaView style={styles.page}>
@@ -47,22 +36,45 @@ export default function Inicio() {
         </View>
 
         <View style={styles.container}>
-          <View style={styles.section}>
-            <Text style={styles.titleSection}>Seus agendamentos</Text>
-            <Text style={styles.descriptionSection}>
-              Você ainda não possui agendamentos
-            </Text>
+          <View style={styles.containerSection}>
+            <TouchableOpacity
+              style={styles.seusAgendamentos}
+              onPress={() => {
+                if (paciente?.id) {
+                  router.push({
+                    pathname: "../screens/meusAgendamentos/meusAgendamentos",
+                    params: { id_paciente: paciente.id },
+                  });
+                } else {
+                  Alert.alert("Erro", "Paciente não encontrado.");
+                }
+              }}
+            >
+              <Text style={styles.textMeusAgendamentos}>Meus agendamentos</Text>
+              <Image
+                style={styles.iconSeusAgendamentos}
+                source={require("../../assets/ep_arrow-right.png")}
+              />
+            </TouchableOpacity>
           </View>
 
-          <View style={styles.section}>
-            <Text style={styles.titleSection}>Postos de saúde próximos</Text>
+          <View style={styles.containerSection}>
+            <View style={styles.section}>
+              <Text style={styles.titleSection}>Postos de saúde próximos</Text>
+              <Text style={styles.descriptionSection}>
+                Selecione um para realizar o agendamento
+              </Text>
+            </View>
             <ListaPostos onPressPosto={(id) => router.push(`../posto/${id}`)} />
           </View>
-          <View style={[styles.section, styles.sectionFaq]}>
+          <View style={[styles.containerSection, styles.sectionFaq]}>
             <Text style={[styles.titleSection, styles.titleFaq]}>
               O que você está procurando?
             </Text>
-            <TouchableOpacity style={styles.containerCardFaq}>
+            <TouchableOpacity
+              style={styles.containerCardFaq}
+              onPress={() => router.push("../screens/ajuda/item0")}
+            >
               <View style={styles.cardFaq}>
                 <Image
                   style={styles.iconFaq}
@@ -73,7 +85,10 @@ export default function Inicio() {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.containerCardFaq}>
+            <TouchableOpacity
+              style={styles.containerCardFaq}
+              onPress={() => router.push("../screens/ajuda/item1")}
+            >
               <View style={styles.cardFaq}>
                 <Image
                   style={styles.iconFaq}
@@ -84,7 +99,10 @@ export default function Inicio() {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.containerCardFaq}>
+            <TouchableOpacity
+              style={styles.containerCardFaq}
+              onPress={() => router.push("../screens/ajuda/item2")}
+            >
               <View style={styles.cardFaq}>
                 <Image
                   style={styles.iconFaq}
@@ -95,7 +113,10 @@ export default function Inicio() {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.containerCardFaq}>
+            <TouchableOpacity
+              style={styles.containerCardFaq}
+              onPress={() => router.push("../screens/ajuda/item3")}
+            >
               <View style={styles.cardFaq}>
                 <Image
                   style={styles.iconFaq}
@@ -133,7 +154,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   container: {
-    padding: 16,
+    paddingHorizontal: 16,
   },
   icon: {
     width: 32,
@@ -143,15 +164,39 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  section: {
-    marginBottom: 32,
+  containerSection: {
+    marginTop: 32,
     gap: 16,
   },
+
+  seusAgendamentos: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+
+  textMeusAgendamentos: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#016DFF",
+    width: "90%",
+  },
+
+  iconSeusAgendamentos: {
+    width: 16,
+    height: 16,
+  },
+
+  section: {
+    gap: 4,
+  },
+
   titleSection: {
     fontSize: 16,
   },
   descriptionSection: {
-    fontSize: 12,
+    fontSize: 10,
     color: "#808080",
   },
 

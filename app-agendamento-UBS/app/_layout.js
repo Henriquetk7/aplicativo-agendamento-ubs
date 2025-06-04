@@ -4,37 +4,25 @@ export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="login"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="cadastro"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
         name="(tabs)"
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="posto/[id]"
+        name="posto"
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="posto/agendamento"
+        name="screens"
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="posto/resumo"
+        name="auth"
         options={{
           headerShown: false,
         }}

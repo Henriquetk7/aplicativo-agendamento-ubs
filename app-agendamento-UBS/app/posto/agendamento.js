@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   itemSelecionado: {
-    backgroundColor: "#016DFF33",
+    backgroundColor: "#CFE3FF",
     borderWidth: 2,
     borderColor: "#016DFF",
   },
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   horarioSelecionado: {
-    backgroundColor: "#016DFF33",
+    backgroundColor: "#CFE3FF",
     borderWidth: 2,
     borderColor: "#016DFF",
   },
