@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { usePacienteStore } from "../store/usePacienteStore";
+import useAuthStore from "../store/auth"; // ou "../store/usePacienteStore" se o nome for outro
 
 export function usePaciente() {
-  const { paciente, setPaciente } = usePacienteStore();
+  const { paciente, setPaciente } = useAuthStore();
 
   useEffect(() => {
     const carregarPaciente = async () => {

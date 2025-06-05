@@ -92,9 +92,6 @@ export default function LoginScreen() {
                 Ainda não tem conta? Cadastrar-se
               </Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity onPress={() => router.replace("/loginPosto")}>
-            <Text style={styles.linkCadastro}>Login posto</Text>
-          </TouchableOpacity> */}
           </View>
         </ScrollView>
       </SafeAreaView>

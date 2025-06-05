@@ -13,13 +13,26 @@ import {
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import ListaPostos from "../shared/components/ListaPostos.js";
-import { usePacienteStore } from "../../store/usePacienteStore.js";
 import { usePaciente } from "../../hooks/usePaciente.js";
 
 export default function Inicio() {
   const router = useRouter();
   const paciente = usePaciente();
-  const nomePaciente = paciente?.nome?.split(" ").slice(0, 2).join(" ") || "";
+  const [nomePaciente, setNomePaciente] = useState("");
+
+  useEffect(() => {
+    const buscarPaciente = async () => {
+      const pacienteJson = await AsyncStorage.getItem("paciente");
+      if (pacienteJson) {
+        const paciente = JSON.parse(pacienteJson);
+        const nomes = paciente.nome.split(" ");
+        const primeirosDois = nomes.slice(0, 2).join(" ");
+        setNomePaciente(primeirosDois);
+      }
+    };
+
+    buscarPaciente();
+  }, []);
 
   return (
     <SafeAreaView style={styles.page}>

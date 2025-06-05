@@ -153,6 +153,9 @@ async function loginPaciente(email, senha) {
       paciente: {
         id: paciente.id_paciente,
         nome: paciente.nome,
+        cpf: paciente.cpf,
+        telefone: paciente.telefone,
+        num_sus: paciente.num_sus,
         email: paciente.email,
       },
     };
@@ -276,7 +279,8 @@ FROM agendamentos_pacientes ap
 JOIN agendamentos a ON ap.id_agendamento = a.id_agendamento
 JOIN tipos_atendimento ta ON a.id_tipo_atendimento = ta.id_tipo_atendimento
 JOIN postos_saude ps ON a.id_posto_saude = ps.id_posto_saude
-WHERE ap.id_paciente = ?;`,
+WHERE ap.id_paciente = ?
+ORDER BY a.data_hora_agendamento ASC;`,
     [id_paciente]
   );
   return rows;

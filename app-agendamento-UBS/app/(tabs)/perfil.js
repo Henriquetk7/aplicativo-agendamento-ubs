@@ -62,7 +62,10 @@ export default function Perfil() {
       </View>
 
       <View style={styles.containerCard}>
-        <TouchableOpacity style={styles.cardBtn}>
+        <TouchableOpacity
+          style={styles.cardBtn}
+          onPress={() => router.push("../../screens/meusDados/meusDados")}
+        >
           <View style={styles.cardSection}>
             <View style={styles.card}>
               <Image
