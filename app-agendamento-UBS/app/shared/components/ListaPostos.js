@@ -19,7 +19,9 @@ export default function ListaPostos({ onPressPosto }) {
   const buscarPostos = async () => {
     try {
       const localizacao = await getLocalizacaoAtual();
-      const response = await fetch("http://192.168.85.166:3000/");
+      const response = await fetch(
+        "https://backend-app-agendamento-1.onrender.com/"
+      );
       const data = await response.json();
 
       const dataComDistancia = await Promise.all(

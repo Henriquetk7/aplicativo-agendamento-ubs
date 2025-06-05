@@ -61,20 +61,23 @@ export default function CadastroScreen() {
     }
 
     try {
-      const response = await fetch("http://192.168.85.166:3000/cadastro", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nome,
-          cpf: cpfLimpo,
-          telefone: telefoneLimpo,
-          num_sus: susLimpo,
-          email,
-          senha,
-        }),
-      });
+      const response = await fetch(
+        "https://backend-app-agendamento-1.onrender.com/cadastro",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nome,
+            cpf: cpfLimpo,
+            telefone: telefoneLimpo,
+            num_sus: susLimpo,
+            email,
+            senha,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -198,7 +201,7 @@ export default function CadastroScreen() {
           <ButtonComponent onPress={handleCadastro} title="Cadastrar-se" />
 
           <TouchableOpacity
-            onPress={() => router.replace("../../auth/screens/LoginScreen")}
+            onPress={() => router.replace("../screens/LoginScreen")}
           >
             <Text style={styles.linkLogin}>Já possui conta? Faça login</Text>
           </TouchableOpacity>

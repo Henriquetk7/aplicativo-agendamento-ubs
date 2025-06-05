@@ -1,7 +1,16 @@
 const mysql = require("mysql2/promise");
 const bcrypt = require("bcrypt");
 
-const client = mysql.createPool(process.env.CONNECTION_STRING);
+let client;
+
+(async () => {
+  try {
+    client = await mysql.createConnection(process.env.DATABASE_URL);
+    console.log("Conexão com banco feita com sucesso.");
+  } catch (err) {
+    console.error("Erro ao conectar no banco:", err);
+  }
+})();
 
 // ==========================
 // WEB ADMIN

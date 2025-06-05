@@ -20,7 +20,7 @@ export default function DetalhesPosto() {
   useEffect(() => {
     console.log("ID recebido:", id);
 
-    fetch(`http://192.168.85.166:3000/detalhesPosto/${id}`)
+    fetch(`https://backend-app-agendamento-1.onrender.com/detalhesPosto/${id}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Dados recebidos:", data);

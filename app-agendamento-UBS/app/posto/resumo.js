@@ -34,7 +34,7 @@ export default function ResumoAgendamento() {
               const paciente = JSON.parse(pacienteJson);
 
               const response = await fetch(
-                "http://192.168.85.166:3000/agendar",
+                "https://backend-app-agendamento-1.onrender.com/agendar",
                 {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },

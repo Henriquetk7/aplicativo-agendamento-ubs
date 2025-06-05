@@ -6,13 +6,16 @@ const useAuthStore = create((set) => ({
   setPaciente: (paciente) => set({ paciente }),
   login: async (email, senha) => {
     try {
-      const response = await fetch("http://192.168.85.166:3000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, senha }),
-      });
+      const response = await fetch(
+        "https://backend-app-agendamento-1.onrender.com/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, senha }),
+        }
+      );
 
       const data = await response.json();
       console.log("Resposta da API:", data);

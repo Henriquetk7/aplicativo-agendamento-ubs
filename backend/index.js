@@ -205,6 +205,7 @@ app.get("/", async (req, res) => {
   res.json(results);
 });
 
-app.listen(process.env.PORT, "192.168.85.166", () => {
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
   console.log("App is running!");
 });

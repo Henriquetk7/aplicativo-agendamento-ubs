@@ -24,7 +24,7 @@ export default function Agendamento() {
 
   // Buscar nome do posto
   useEffect(() => {
-    fetch(`http://192.168.85.166:3000/detalhesPosto/${id}`)
+    fetch(`https://backend-app-agendamento-1.onrender.com/detalhesPosto/${id}`)
       .then((res) => res.json())
       .then(setPosto)
       .catch((err) => console.error("Erro ao buscar posto:", err));
@@ -32,7 +32,9 @@ export default function Agendamento() {
 
   // Buscar tipos de atendimento
   useEffect(() => {
-    fetch(`http://192.168.85.166:3000/tiposAtendimento/${id}`)
+    fetch(
+      `https://backend-app-agendamento-1.onrender.com/tiposAtendimento/${id}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setTipos(data);
@@ -50,7 +52,7 @@ export default function Agendamento() {
       setLoadingHorarios(true);
       setHorarioSelecionado(null);
       fetch(
-        `http://192.168.85.166:3000/horariosAgendamentoComFichas/${id}/${tipoSelecionado}`
+        `https://backend-app-agendamento-1.onrender.com/horariosAgendamentoComFichas/${id}/${tipoSelecionado}`
       )
         .then((res) => res.json())
         .then((data) => {

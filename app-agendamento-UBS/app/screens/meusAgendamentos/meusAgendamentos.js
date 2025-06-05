@@ -35,7 +35,7 @@ export default function MeusAgendamentos() {
       if (id_paciente) {
         try {
           const response = await fetch(
-            `http://192.168.85.166:3000/meusAgendamentos/${id_paciente}`
+            `https://backend-app-agendamento-1.onrender.com/meusAgendamentos/${id_paciente}`
           );
           const data = await response.json();
           setAgendamentos(data);
