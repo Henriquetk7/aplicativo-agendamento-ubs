@@ -23,20 +23,6 @@ export default function MeusAgendamentos() {
   const [agendamentos, setAgendamentos] = useState([]);
 
   useEffect(() => {
-    const buscarPaciente = async () => {
-      if (!paciente) {
-        const pacienteJson = await AsyncStorage.getItem("paciente");
-        if (pacienteJson) {
-          const dados = JSON.parse(pacienteJson);
-          setPaciente(dados);
-        }
-      }
-    };
-
-    buscarPaciente();
-  }, []);
-
-  useEffect(() => {
     const carregar = async () => {
       if (!paciente) {
         const pacienteJson = await AsyncStorage.getItem("paciente");
@@ -58,7 +44,6 @@ export default function MeusAgendamentos() {
         }
       }
     };
-
     carregar();
   }, [id_paciente]);
 

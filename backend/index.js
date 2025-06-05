@@ -44,24 +44,6 @@ app.post("/posto/agendamentos", async (req, res) => {
 // APP MOBILE - ROTAS
 // =======================
 
-app.post("/login", async (req, res) => {
-  const { email, senha } = req.body;
-  const resultado = await db.loginPaciente(email, senha);
-  if (!resultado.success)
-    return res.status(401).json({ message: resultado.message });
-
-  return res.json(resultado.paciente);
-});
-
-app.post("/cadastro", async (req, res) => {
-  const paciente = req.body;
-  const results = await db.cadastroPaciente(paciente);
-  if (!results.success)
-    return res.status(400).json({ message: results.message });
-
-  res.status(201).json({ message: "Cadastrado com sucesso." });
-});
-
 app.get("/meusAgendamentos/:id_paciente", async (req, res) => {
   const id_paciente = parseInt(req.params.id_paciente);
   if (isNaN(id_paciente)) {
@@ -180,7 +162,6 @@ app.get("/tiposAtendimento/:id_posto_saude", async (req, res) => {
   }
 });
 
-// 🔍 Detalhes do posto
 app.get("/detalhesPosto/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
@@ -201,15 +182,29 @@ app.get("/detalhesPosto/:id", async (req, res) => {
   }
 });
 
-// 🔍 Lista todos os postos
+app.post("/login", async (req, res) => {
+  const { email, senha } = req.body;
+  const resultado = await db.loginPaciente(email, senha);
+  if (!resultado.success)
+    return res.status(401).json({ message: resultado.message });
+
+  return res.json(resultado.paciente);
+});
+
+app.post("/cadastro", async (req, res) => {
+  const paciente = req.body;
+  const results = await db.cadastroPaciente(paciente);
+  if (!results.success)
+    return res.status(400).json({ message: results.message });
+
+  res.status(201).json({ message: "Cadastrado com sucesso." });
+});
+
 app.get("/", async (req, res) => {
   const results = await db.getPostos();
   res.json(results);
 });
 
-// =======================
-// 🚀 Servidor rodando
-// =======================
 app.listen(process.env.PORT, "192.168.85.166", () => {
   console.log("App is running!");
 });
