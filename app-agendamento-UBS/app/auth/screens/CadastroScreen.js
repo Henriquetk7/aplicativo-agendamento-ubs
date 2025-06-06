@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useRouter } from "expo-router";
 import { TextInputMask } from "react-native-masked-text";
 import ButtonComponent from "../../shared/components/ButtonComponent";
+import config from "../../../config";
 
 export default function CadastroScreen() {
   const router = useRouter();
@@ -61,23 +62,20 @@ export default function CadastroScreen() {
     }
 
     try {
-      const response = await fetch(
-        "https://backend-app-agendamento-1.onrender.com/cadastro",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            nome,
-            cpf: cpfLimpo,
-            telefone: telefoneLimpo,
-            num_sus: susLimpo,
-            email,
-            senha,
-          }),
-        }
-      );
+      const response = await fetch(`${config.BASE_URL}/cadastro`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome,
+          cpf: cpfLimpo,
+          telefone: telefoneLimpo,
+          num_sus: susLimpo,
+          email,
+          senha,
+        }),
+      });
 
       const data = await response.json();
 

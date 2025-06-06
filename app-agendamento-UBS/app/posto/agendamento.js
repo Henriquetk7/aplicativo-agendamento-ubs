@@ -9,6 +9,7 @@ import {
   Image,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import config from "../../config";
 
 export default function Agendamento() {
   const { id } = useLocalSearchParams();
@@ -24,7 +25,7 @@ export default function Agendamento() {
 
   // Buscar nome do posto
   useEffect(() => {
-    fetch(`https://backend-app-agendamento-1.onrender.com/detalhesPosto/${id}`)
+    fetch(`${config.BASE_URL}/detalhesPosto/${id}`)
       .then((res) => res.json())
       .then(setPosto)
       .catch((err) => console.error("Erro ao buscar posto:", err));
@@ -32,9 +33,7 @@ export default function Agendamento() {
 
   // Buscar tipos de atendimento
   useEffect(() => {
-    fetch(
-      `https://backend-app-agendamento-1.onrender.com/tiposAtendimento/${id}`
-    )
+    fetch(`${config.BASE_URL}/tiposAtendimento/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setTipos(data);
@@ -52,7 +51,7 @@ export default function Agendamento() {
       setLoadingHorarios(true);
       setHorarioSelecionado(null);
       fetch(
-        `https://backend-app-agendamento-1.onrender.com/horariosAgendamentoComFichas/${id}/${tipoSelecionado}`
+        `${config.BASE_URL}/horariosAgendamentoComFichas/${id}/${tipoSelecionado}`
       )
         .then((res) => res.json())
         .then((data) => {

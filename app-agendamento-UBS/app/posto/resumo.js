@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../config";
 
 export default function ResumoAgendamento() {
   const { nome_posto, id_agendamento, descricao, data_hora } =
@@ -33,17 +34,14 @@ export default function ResumoAgendamento() {
 
               const paciente = JSON.parse(pacienteJson);
 
-              const response = await fetch(
-                "https://backend-app-agendamento-1.onrender.com/agendar",
-                {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    id_agendamento: parseInt(id_agendamento),
-                    id_paciente: paciente.id,
-                  }),
-                }
-              );
+              const response = await fetch(`${config.BASE_URL}/agendar`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  id_agendamento: parseInt(id_agendamento),
+                  id_paciente: paciente.id,
+                }),
+              });
 
               const data = await response.json();
 

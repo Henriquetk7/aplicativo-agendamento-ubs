@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ButtonComponent from "../shared/components/ButtonComponent";
+import config from "../../config";
 
 export default function DetalhesPosto() {
   const { id } = useLocalSearchParams();
@@ -20,7 +21,7 @@ export default function DetalhesPosto() {
   useEffect(() => {
     console.log("ID recebido:", id);
 
-    fetch(`https://backend-app-agendamento-1.onrender.com/detalhesPosto/${id}`)
+    fetch(`${config.BASE_URL}/detalhesPosto/${id}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Dados recebidos:", data);

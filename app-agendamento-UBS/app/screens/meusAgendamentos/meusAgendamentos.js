@@ -14,6 +14,7 @@ import { useRouter } from "expo-router";
 import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import useAuthStore from "../../../store/auth";
+import config from "../../../config";
 
 export default function MeusAgendamentos() {
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function MeusAgendamentos() {
       if (id_paciente) {
         try {
           const response = await fetch(
-            `https://backend-app-agendamento-1.onrender.com/meusAgendamentos/${id_paciente}`
+            `${config.BASE_URL}/meusAgendamentos/${id_paciente}`
           );
           const data = await response.json();
           setAgendamentos(data);

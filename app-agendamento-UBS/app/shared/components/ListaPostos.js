@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { getLocalizacaoAtual } from "../../../helpers/getLocalizacaoAtual";
 import { geocodeEndereco } from "../../../helpers/geocodeEndereco";
 import { calcularDistancia } from "../../../helpers/calcularDistancia";
+import config from "../../../config";
 
 export default function ListaPostos({ onPressPosto }) {
   const [postos_saude, setPostos_saude] = useState([]);
@@ -19,9 +20,7 @@ export default function ListaPostos({ onPressPosto }) {
   const buscarPostos = async () => {
     try {
       const localizacao = await getLocalizacaoAtual();
-      const response = await fetch(
-        "https://backend-app-agendamento-1.onrender.com/"
-      );
+      const response = await fetch(`${config.BASE_URL}/`);
       const data = await response.json();
 
       const dataComDistancia = await Promise.all(
