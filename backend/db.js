@@ -15,29 +15,6 @@ let client;
 // ==========================
 // WEB ADMIN
 // ==========================
-async function cadastroPosto(posto) {
-  const hashedPassword = await bcrypt.hash(paciente.senha, 10);
-  const values = [
-    posto.nome,
-    posto.endereco,
-    paciente.horario_funcionamento,
-    paciente.telefone,
-    paciente.email,
-    hashedPassword,
-  ];
-  try {
-    await client.query(
-      `INSERT INTO postos_saude (nome, endereco, horario_funcionamento, telefone, email, senha) VALUES (?, ?, ?, ?, ?, ?)`,
-      values
-    );
-
-    return { success: true, message: "Posto de saúde cadastrado com sucesso." };
-  } catch (error) {
-    console.error("Erro ao cadastrar posto de saúde:", error);
-    return { success: false, message: "Erro ao cadastrar posto de saúde." };
-  }
-}
-
 async function loginPosto(email, senha) {
   try {
     const [rows] = await client.query(
@@ -69,26 +46,6 @@ async function loginPosto(email, senha) {
     console.error("Erro ao fazer login:", error);
     return { success: false, message: "Erro no login." };
   }
-}
-
-async function pacientesDoDia(id) {
-  const [rows] = await client.query(
-    `SELECT 
-      p.nome AS nome_paciente,
-      a.tipo_atendimento,
-      a.data_agendamento,
-      a.hora_agendamento
-    FROM 
-      agendamentos_pacientes ap
-    JOIN 
-      agendamentos a ON ap.id_agendamento = a.id_agendamento
-    JOIN 
-      pacientes p ON ap.id_paciente = p.id_paciente
-    WHERE 
-      p.id_paciente = ?;`,
-    [id]
-  );
-  return rows[0];
 }
 
 async function criarAgendamento(agendamento) {

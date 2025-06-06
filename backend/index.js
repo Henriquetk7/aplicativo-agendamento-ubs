@@ -20,7 +20,7 @@ app.post("/posto/login", async (req, res) => {
   });
 });
 
-app.post("/posto/agendamentos", async (req, res) => {
+app.post("/posto/novoAgendamento", async (req, res) => {
   const { id_tipo_atendimento, data_hora_agendamento, quantidade_fichas } =
     req.body;
 
