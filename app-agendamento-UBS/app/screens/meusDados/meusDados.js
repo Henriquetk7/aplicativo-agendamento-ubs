@@ -42,7 +42,7 @@ export default function MeusDados() {
           <TouchableOpacity onPress={() => router.back()}>
             <Image
               style={styles.goBackIcon}
-              source={require("../../../assets/arrow-right.png")}
+              source={require("../../assets/arrow-right.png")}
             />
           </TouchableOpacity>
           <Text style={styles.title}>Meus Dados</Text>

@@ -55,7 +55,7 @@ export default function Perfil() {
         <View style={styles.user}>
           <Image
             style={styles.iconUser}
-            source={require("../../assets/person-icon.png")}
+            source={require("../assets/person-icon.png")}
           />
         </View>
         <Text style={styles.userName}>{nomePaciente}</Text>
@@ -70,7 +70,7 @@ export default function Perfil() {
             <View style={styles.card}>
               <Image
                 style={styles.cardIcon}
-                source={require("../../assets/icon-person-data.png")}
+                source={require("../assets/icon-person-data.png")}
               />
 
               <View>
@@ -82,7 +82,7 @@ export default function Perfil() {
             </View>
             <Image
               style={styles.iconAux}
-              source={require("../../assets/ep_arrow-right-perfil.png")}
+              source={require("../assets/ep_arrow-right-perfil.png")}
             />
           </View>
         </TouchableOpacity>
@@ -96,7 +96,7 @@ export default function Perfil() {
             <View style={styles.card}>
               <Image
                 style={styles.cardIcon}
-                source={require("../../assets/icon-schedule.png")}
+                source={require("../assets/icon-schedule.png")}
               />
 
               <View>
@@ -108,7 +108,7 @@ export default function Perfil() {
             </View>
             <Image
               style={styles.iconAux}
-              source={require("../../assets/ep_arrow-right-perfil.png")}
+              source={require("../assets/ep_arrow-right-perfil.png")}
             />
           </View>
         </TouchableOpacity>
@@ -117,7 +117,7 @@ export default function Perfil() {
             <View style={styles.card}>
               <Image
                 style={styles.cardIcon}
-                source={require("../../assets/icon-terms.png")}
+                source={require("../assets/icon-terms.png")}
               />
 
               <View>
@@ -129,7 +129,7 @@ export default function Perfil() {
             </View>
             <Image
               style={[styles.iconAux, styles.iconExport]}
-              source={require("../../assets/icon-export.png")}
+              source={require("../assets/icon-export.png")}
             />
           </View>
         </TouchableOpacity>
@@ -138,7 +138,7 @@ export default function Perfil() {
             <View style={styles.card}>
               <Image
                 style={[styles.cardIcon, styles.iconLogout]}
-                source={require("../../assets/icon-logout.png")}
+                source={require("../assets/icon-logout.png")}
               />
 
               <View>

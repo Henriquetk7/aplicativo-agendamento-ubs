@@ -17,7 +17,6 @@ app.post("/posto/login", async (req, res) => {
 
   res.status(200).json({
     posto: resultado.posto,
-    token: resultado.token,
   });
 });
 
@@ -64,6 +63,26 @@ app.get("/meusAgendamentos/:id_paciente", async (req, res) => {
   }
 });
 
+app.post("/agendar", async (req, res) => {
+  try {
+    const { id_agendamento, id_paciente } = req.body;
+
+    if (!id_agendamento || !id_paciente) {
+      return res.status(400).json({ message: "Dados incompletos" });
+    }
+
+    const resultado = await db.insertAgendamentoPaciente({
+      id_agendamento,
+      id_paciente,
+    });
+
+    res.status(resultado.success ? 200 : 500).json(resultado);
+  } catch (error) {
+    console.error("Erro no POST /agendar", error);
+    res.status(500).json({ message: "Erro interno do servidor" });
+  }
+});
+
 app.get(
   "/horariosAgendamentoComFichas/:id_posto_saude/:id_tipo_atendimento",
   async (req, res) => {
@@ -91,26 +110,6 @@ app.get(
     }
   }
 );
-
-app.post("/agendar", async (req, res) => {
-  try {
-    const { id_agendamento, id_paciente } = req.body;
-
-    if (!id_agendamento || !id_paciente) {
-      return res.status(400).json({ message: "Dados incompletos" });
-    }
-
-    const resultado = await db.insertAgendamentoPaciente({
-      id_agendamento,
-      id_paciente,
-    });
-
-    res.status(resultado.success ? 200 : 500).json(resultado);
-  } catch (error) {
-    console.error("Erro no POST /agendar", error);
-    res.status(500).json({ message: "Erro interno do servidor" });
-  }
-});
 
 app.get(
   "/horariosAgendamento/:id_posto_saude/:id_tipo_atendimento",
@@ -182,6 +181,11 @@ app.get("/detalhesPosto/:id", async (req, res) => {
   }
 });
 
+app.get("/postos", async (req, res) => {
+  const results = await db.getPostos();
+  res.json(results);
+});
+
 app.post("/login", async (req, res) => {
   const { email, senha } = req.body;
   const resultado = await db.loginPaciente(email, senha);
@@ -198,11 +202,6 @@ app.post("/cadastro", async (req, res) => {
     return res.status(400).json({ message: results.message });
 
   res.status(201).json({ message: "Cadastrado com sucesso." });
-});
-
-app.get("/", async (req, res) => {
-  const results = await db.getPostos();
-  res.json(results);
 });
 
 const port = process.env.PORT || 3000;

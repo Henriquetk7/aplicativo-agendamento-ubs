@@ -42,7 +42,7 @@ export default function Inicio() {
           <View style={styles.headerContainer}>
             <Image
               style={styles.icon}
-              source={require("../../assets/logo-1.png")}
+              source={require("../assets/logo-1.png")}
             />
             <Text style={styles.userName}>Olá, {nomePaciente}</Text>
           </View>
@@ -66,7 +66,7 @@ export default function Inicio() {
               <Text style={styles.textMeusAgendamentos}>Meus agendamentos</Text>
               <Image
                 style={styles.iconSeusAgendamentos}
-                source={require("../../assets/ep_arrow-right.png")}
+                source={require("../assets/ep_arrow-right.png")}
               />
             </TouchableOpacity>
           </View>
@@ -91,7 +91,7 @@ export default function Inicio() {
               <View style={styles.cardFaq}>
                 <Image
                   style={styles.iconFaq}
-                  source={require("../../assets/faq-icon.png")}
+                  source={require("../assets/faq-icon.png")}
                 />
                 <Text style={styles.cardFaqText}>
                   Como faço para agendar uma consulta?
@@ -105,7 +105,7 @@ export default function Inicio() {
               <View style={styles.cardFaq}>
                 <Image
                   style={styles.iconFaq}
-                  source={require("../../assets/faq-icon.png")}
+                  source={require("../assets/faq-icon.png")}
                 />
                 <Text style={styles.cardFaqText}>
                   Quais tipos de atendimento estão disponíveis?
@@ -119,7 +119,7 @@ export default function Inicio() {
               <View style={styles.cardFaq}>
                 <Image
                   style={styles.iconFaq}
-                  source={require("../../assets/faq-icon.png")}
+                  source={require("../assets/faq-icon.png")}
                 />
                 <Text style={styles.cardFaqText}>
                   Preciso levar algum documento no dia da consulta?
@@ -133,7 +133,7 @@ export default function Inicio() {
               <View style={styles.cardFaq}>
                 <Image
                   style={styles.iconFaq}
-                  source={require("../../assets/faq-icon.png")}
+                  source={require("../assets/faq-icon.png")}
                 />
                 <Text style={styles.cardFaqText}>
                   O que fazer em casos de emergência?

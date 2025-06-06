@@ -31,7 +31,7 @@ export default function TabsLayout() {
           title: "Início",
           tabBarIcon: ({ focused }) => (
             <Image
-              source={require("../../assets/home-icon.png")}
+              source={require("../assets/home-icon.png")}
               style={{
                 width: 24,
                 height: 24,
@@ -52,7 +52,7 @@ export default function TabsLayout() {
               activeOpacity={1}
             >
               <Image
-                source={require("../../assets/agendar-icon.png")}
+                source={require("../assets/agendar-icon.png")}
                 style={{
                   width: 64,
                   height: 64,
@@ -76,7 +76,7 @@ export default function TabsLayout() {
           title: "Perfil",
           tabBarIcon: ({ focused }) => (
             <Image
-              source={require("../../assets/person-icon.png")}
+              source={require("../assets/person-icon.png")}
               style={{
                 width: 24,
                 height: 24,

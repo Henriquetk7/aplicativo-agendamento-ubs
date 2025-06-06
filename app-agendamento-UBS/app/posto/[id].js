@@ -56,7 +56,7 @@ export default function DetalhesPosto() {
         <TouchableOpacity onPress={() => router.back()}>
           <Image
             style={styles.goBackIcon}
-            source={require("../../assets/arrow-right.png")}
+            source={require("../assets/arrow-right.png")}
           />
         </TouchableOpacity>
 
@@ -66,7 +66,7 @@ export default function DetalhesPosto() {
           <View style={styles.cardInfo}>
             <Image
               style={styles.icon}
-              source={require("../../assets/clock-icon.png")}
+              source={require("../assets/clock-icon.png")}
             />
             <View>
               <Text style={styles.text}>Horário de funcionamento:</Text>
@@ -76,7 +76,7 @@ export default function DetalhesPosto() {
           <View style={styles.cardInfo}>
             <Image
               style={styles.icon}
-              source={require("../../assets/local-icon-large.png")}
+              source={require("../assets/local-icon-large.png")}
             />
             <View>
               <Text style={styles.text}>Endereço:</Text>
@@ -86,7 +86,7 @@ export default function DetalhesPosto() {
           <View style={styles.cardInfo}>
             <Image
               style={styles.icon}
-              source={require("../../assets/phone-icon.png")}
+              source={require("../assets/phone-icon.png")}
             />
             <View>
               <Text style={styles.text}>Telefone:</Text>
@@ -96,7 +96,7 @@ export default function DetalhesPosto() {
           <View style={styles.cardInfo}>
             <Image
               style={styles.icon}
-              source={require("../../assets/email-icon.png")}
+              source={require("../assets/email-icon.png")}
             />
             <View>
               <Text style={styles.text}>E-mail:</Text>

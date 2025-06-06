@@ -100,7 +100,7 @@ export default function CadastroScreen() {
           <StatusBar style="auto" />
           <Image
             style={styles.img}
-            source={require("../../../assets/logo-1.png")}
+            source={require("../../assets/logo-1.png")}
           />
           <Text style={styles.title}>Cadastre-se</Text>
 
@@ -185,8 +185,8 @@ export default function CadastroScreen() {
                   style={styles.icon}
                   source={
                     mostrarSenha
-                      ? require("../../../assets/view.png")
-                      : require("../../../assets/view-off.png")
+                      ? require("../../assets/view.png")
+                      : require("../../assets/view-off.png")
                   }
                 />
               </TouchableOpacity>

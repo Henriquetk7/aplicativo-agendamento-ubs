@@ -11,7 +11,7 @@ export default function Ajuda({ title, content }) {
       <TouchableOpacity onPress={() => router.back()} activeOpacity={0.7}>
         <Image
           style={styles.goBackIcon}
-          source={require("../../../assets/arrow-right.png")}
+          source={require("../../assets/arrow-right.png")}
         />
       </TouchableOpacity>
 

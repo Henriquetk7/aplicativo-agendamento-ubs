@@ -1,21 +1,19 @@
 import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../config";
 
 const useAuthStore = create((set) => ({
   paciente: null,
   setPaciente: (paciente) => set({ paciente }),
   login: async (email, senha) => {
     try {
-      const response = await fetch(
-        "https://backend-app-agendamento-1.onrender.com/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, senha }),
-        }
-      );
+      const response = await fetch(`${config.BASE_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, senha }),
+      });
 
       const data = await response.json();
       console.log("Resposta da API:", data);

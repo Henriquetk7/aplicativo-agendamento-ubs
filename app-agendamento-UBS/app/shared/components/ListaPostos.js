@@ -20,7 +20,7 @@ export default function ListaPostos({ onPressPosto }) {
   const buscarPostos = async () => {
     try {
       const localizacao = await getLocalizacaoAtual();
-      const response = await fetch(`${config.BASE_URL}/`);
+      const response = await fetch(`${config.BASE_URL}/postos`);
       const data = await response.json();
 
       const dataComDistancia = await Promise.all(
@@ -48,7 +48,7 @@ export default function ListaPostos({ onPressPosto }) {
     } catch (error) {
       console.error("Erro ao buscar postos:", error.message);
     } finally {
-      setCarregando(false); // loading finalizado
+      setCarregando(false);
     }
   };
 
@@ -84,7 +84,7 @@ export default function ListaPostos({ onPressPosto }) {
             <View style={styles.circle}>
               <Image
                 style={styles.icon}
-                source={require("../../../assets/local-icon.png")}
+                source={require("../../assets/local-icon.png")}
               />
             </View>
             <View style={styles.item}>

@@ -51,7 +51,7 @@ export default function LoginScreen() {
             <StatusBar style="auto" />
             <Image
               style={styles.img}
-              source={require("../../../assets/logo-1.png")}
+              source={require("../../assets/logo-1.png")}
             />
             <Text style={styles.title}>Login</Text>
             <TextInput
@@ -77,8 +77,8 @@ export default function LoginScreen() {
                 style={styles.icon}
                 source={
                   mostrarSenha
-                    ? require("../../../assets/view.png")
-                    : require("../../../assets/view-off.png")
+                    ? require("../../assets/view.png")
+                    : require("../../assets/view-off.png")
                 }
               />
             </TouchableOpacity>

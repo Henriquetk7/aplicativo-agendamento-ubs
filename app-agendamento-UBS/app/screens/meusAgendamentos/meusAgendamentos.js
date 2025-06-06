@@ -63,7 +63,7 @@ export default function MeusAgendamentos() {
         <TouchableOpacity onPress={() => router.back()}>
           <Image
             style={styles.goBackIcon}
-            source={require("../../../assets/arrow-right.png")}
+            source={require("../../assets/arrow-right.png")}
           />
         </TouchableOpacity>
         <Text style={styles.title}>Meus agendamentos</Text>
@@ -79,7 +79,7 @@ export default function MeusAgendamentos() {
             <View style={styles.containerListEmpyt}>
               <Image
                 style={styles.imgListEmpyt}
-                source={require("../../../assets/empyt-list.png")}
+                source={require("../../assets/empyt-list.png")}
               />
               <Text style={styles.semAgendamento}>
                 Você ainda não possui nenhum agendamento.

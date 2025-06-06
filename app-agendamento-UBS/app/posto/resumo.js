@@ -68,7 +68,7 @@ export default function ResumoAgendamento() {
           <TouchableOpacity onPress={() => router.back()}>
             <Image
               style={styles.goBackIcon}
-              source={require("../../assets/arrow-right.png")}
+              source={require("../assets/arrow-right.png")}
             />
           </TouchableOpacity>
           <Text style={styles.title}>Resumo do Agendamento</Text>
@@ -77,7 +77,7 @@ export default function ResumoAgendamento() {
           <View style={styles.card}>
             <Image
               style={styles.icon}
-              source={require("../../assets/hospital-icon.png")}
+              source={require("../assets/hospital-icon.png")}
             />
             <View style={styles.cardInfo}>
               <Text style={styles.item}>Posto de saúde:</Text>
@@ -88,7 +88,7 @@ export default function ResumoAgendamento() {
           <View style={styles.card}>
             <Image
               style={styles.icon}
-              source={require("../../assets/list-icon.png")}
+              source={require("../assets/list-icon.png")}
             />
             <View style={styles.cardInfo}>
               <Text style={styles.item}>Tipo de Atendimento:</Text>
@@ -99,7 +99,7 @@ export default function ResumoAgendamento() {
           <View style={styles.card}>
             <Image
               style={styles.icon}
-              source={require("../../assets/time-icon.png")}
+              source={require("../assets/time-icon.png")}
             />
             <View style={styles.cardInfo}>
               <Text style={styles.item}>Horário agendado:</Text>

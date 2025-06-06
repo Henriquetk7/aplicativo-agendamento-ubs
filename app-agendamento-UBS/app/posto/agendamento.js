@@ -23,7 +23,6 @@ export default function Agendamento() {
 
   const router = useRouter();
 
-  // Buscar nome do posto
   useEffect(() => {
     fetch(`${config.BASE_URL}/detalhesPosto/${id}`)
       .then((res) => res.json())
@@ -31,7 +30,6 @@ export default function Agendamento() {
       .catch((err) => console.error("Erro ao buscar posto:", err));
   }, [id]);
 
-  // Buscar tipos de atendimento
   useEffect(() => {
     fetch(`${config.BASE_URL}/tiposAtendimento/${id}`)
       .then((res) => res.json())
@@ -90,7 +88,7 @@ export default function Agendamento() {
       <TouchableOpacity onPress={() => router.back()}>
         <Image
           style={styles.icon}
-          source={require("../../assets/arrow-right.png")}
+          source={require("../assets/arrow-right.png")}
         />
       </TouchableOpacity>
       <Text style={styles.title}>Faça seu agendamento.</Text>
