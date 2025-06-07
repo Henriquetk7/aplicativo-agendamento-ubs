@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
+
+import { Linking } from "react-native";
 import useAuthStore from "../../store/auth";
 
 export default function Perfil() {
@@ -48,6 +50,18 @@ export default function Perfil() {
 
     buscarPaciente();
   }, []);
+
+  const abrirLink = async () => {
+    const url = "https://github.com/Henriquetk7/aplicativo-agendamento-ubs";
+    const suportado = await Linking.canOpenURL(url);
+
+    if (suportado) {
+      await Linking.openURL(url);
+    } else {
+      alert("Não foi possível abrir o link.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -112,7 +126,7 @@ export default function Perfil() {
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.cardBtn}>
+        <TouchableOpacity style={styles.cardBtn} onPress={abrirLink}>
           <View style={styles.cardSection}>
             <View style={styles.card}>
               <Image

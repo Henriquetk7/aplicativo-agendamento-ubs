@@ -122,6 +122,7 @@ export default function CadastroScreen() {
               style={styles.input}
               keyboardType="numeric"
               placeholder="000.000.000-00"
+              placeholderTextColor="#808080"
             />
           </View>
 
@@ -139,6 +140,7 @@ export default function CadastroScreen() {
               style={styles.input}
               keyboardType="numeric"
               placeholder="(68) 99999-9999"
+              placeholderTextColor="#808080"
             />
           </View>
 
@@ -152,6 +154,7 @@ export default function CadastroScreen() {
               onChangeText={setNumSus}
               placeholder="000 0000 0000 0000"
               keyboardType="numeric"
+              placeholderTextColor="#808080"
             />
           </View>
 
@@ -164,6 +167,7 @@ export default function CadastroScreen() {
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
+              placeholderTextColor="#808080"
             />
           </View>
 
@@ -172,6 +176,7 @@ export default function CadastroScreen() {
             <View style={[styles.inputSenha, styles.input]}>
               <TextInput
                 placeholder="*******"
+                placeholderTextColor="#808080"
                 value={senha}
                 onChangeText={setSenha}
                 secureTextEntry={!mostrarSenha}
@@ -241,6 +246,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 12,
     borderRadius: 16,
+    color: "#000",
   },
   inputSenha: {
     flexDirection: "row",

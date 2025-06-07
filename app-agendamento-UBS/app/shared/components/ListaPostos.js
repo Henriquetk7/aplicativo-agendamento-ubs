@@ -20,7 +20,7 @@ export default function ListaPostos({ onPressPosto }) {
   const buscarPostos = async () => {
     try {
       const localizacao = await getLocalizacaoAtual();
-      const response = await fetch(`${config.BASE_URL}/postos`);
+      const response = await fetch(`${config.BASE_URL}/`);
       const data = await response.json();
 
       const dataComDistancia = await Promise.all(

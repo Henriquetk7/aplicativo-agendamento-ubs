@@ -54,17 +54,21 @@ export default function LoginScreen() {
               source={require("../../assets/logo-1.png")}
             />
             <Text style={styles.title}>Login</Text>
+            <Text style={styles.label}>E-mail</Text>
             <TextInput
               style={styles.input}
-              placeholder="E-mail"
+              placeholder="exemplo@email.com"
+              placeholderTextColor="#808080"
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
               autoCapitalize="none"
             />
+            <Text style={styles.label}>Senha</Text>
             <TextInput
               style={styles.input}
-              placeholder="Senha"
+              placeholder="******"
+              placeholderTextColor="#808080"
               value={senha}
               onChangeText={setSenha}
               secureTextEntry={!mostrarSenha}
@@ -122,6 +126,13 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginBottom: 20,
     fontWeight: "bold",
+    color: "#000",
+  },
+
+  label: {
+    fontSize: 10,
+    color: "#808080",
+    marginBottom: 4,
   },
   input: {
     height: 40,
@@ -131,6 +142,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 16,
+    color: "#000",
   },
 
   icon: {

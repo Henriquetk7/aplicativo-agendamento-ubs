@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app-agendamento-UBS",
-    "slug": "app-agendamento-UBS",
+    "name": "UBS Agendamento",
+    "slug": "app-agendamento-ubs",
     "version": "1.0.0",
     "scheme": "app-agendamento-UBS",
     "orientation": "portrait",
@@ -21,12 +21,21 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#F0F1F2"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.henriquetk.appagendamentoubs"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "f26d0a70-a42c-4ee1-91f7-df0c4ca59135"
+      }
+    }
   }
 }

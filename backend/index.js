@@ -181,11 +181,6 @@ app.get("/detalhesPosto/:id", async (req, res) => {
   }
 });
 
-app.get("/postos", async (req, res) => {
-  const results = await db.getPostos();
-  res.json(results);
-});
-
 app.post("/login", async (req, res) => {
   const { email, senha } = req.body;
   const resultado = await db.loginPaciente(email, senha);
@@ -202,6 +197,11 @@ app.post("/cadastro", async (req, res) => {
     return res.status(400).json({ message: results.message });
 
   res.status(201).json({ message: "Cadastrado com sucesso." });
+});
+
+app.get("/", async (req, res) => {
+  const results = await db.getPostos();
+  res.json(results);
 });
 
 const port = process.env.PORT || 3000;
