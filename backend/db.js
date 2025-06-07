@@ -256,9 +256,7 @@ ORDER BY a.data_hora_agendamento ASC;`,
 // EXPORT
 // ==========================
 module.exports = {
-  cadastroPosto,
   loginPosto,
-  pacientesDoDia,
   criarAgendamento,
   loginPaciente,
   cadastroPaciente,
