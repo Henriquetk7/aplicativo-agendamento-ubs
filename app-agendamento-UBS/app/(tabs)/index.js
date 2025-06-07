@@ -34,7 +34,7 @@ export default function Index() {
     );
   }
 
-  return <Redirect href={paciente ? "/inicio" : "/auth/LoginScreen"} />;
+  return <Redirect href={paciente ? "/inicio" : "/auth/screens/LoginScreen"} />;
 }
 export const options = {
   href: null,

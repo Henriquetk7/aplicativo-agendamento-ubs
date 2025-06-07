@@ -199,9 +199,13 @@ app.post("/cadastro", async (req, res) => {
   res.status(201).json({ message: "Cadastrado com sucesso." });
 });
 
-app.get("/", async (req, res) => {
+app.get("/postos", async (req, res) => {
   const results = await db.getPostos();
   res.json(results);
+});
+
+app.get("/", (req, res) => {
+  res.send("API rodando com sucesso");
 });
 
 const port = process.env.PORT || 3000;
