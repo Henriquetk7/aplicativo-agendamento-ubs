@@ -74,9 +74,6 @@ export default function Inicio() {
           <View style={styles.containerSection}>
             <View style={styles.section}>
               <Text style={styles.titleSection}>Postos de saúde próximos</Text>
-              <Text style={styles.descriptionSection}>
-                Selecione um para realizar o agendamento
-              </Text>
             </View>
             <ListaPostos onPressPosto={(id) => router.push(`/posto/${id}`)} />
           </View>
@@ -207,10 +204,6 @@ const styles = StyleSheet.create({
 
   titleSection: {
     fontSize: 16,
-  },
-  descriptionSection: {
-    fontSize: 10,
-    color: "#808080",
   },
 
   sectionFaq: {
