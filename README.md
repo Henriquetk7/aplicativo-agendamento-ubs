@@ -133,7 +133,7 @@ CREATE TABLE agendamentos_pacientes (
 ```bash
 cd backend
 npm install
-npm run dev
+node index.js
 ```
 
 Configure seu `.env` com:
