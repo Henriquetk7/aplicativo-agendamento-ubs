@@ -57,8 +57,6 @@ export default function Perfil() {
 
     if (suportado) {
       await Linking.openURL(url);
-    } else {
-      alert("Não foi possível abrir o link.");
     }
   };
 
@@ -78,7 +76,7 @@ export default function Perfil() {
       <View style={styles.containerCard}>
         <TouchableOpacity
           style={styles.cardBtn}
-          onPress={() => router.push("../../screens/meusDados/meusDados")}
+          onPress={() => router.push("/screens/meusDados/meusDados")}
         >
           <View style={styles.cardSection}>
             <View style={styles.card}>
@@ -103,7 +101,7 @@ export default function Perfil() {
         <TouchableOpacity
           style={styles.cardBtn}
           onPress={() =>
-            router.push("../screens/meusAgendamentos/meusAgendamentos")
+            router.push("/screens/meusAgendamentos/meusAgendamentos")
           }
         >
           <View style={styles.cardSection}>

@@ -47,7 +47,7 @@ export default function ResumoAgendamento() {
 
               if (response.ok) {
                 Alert.alert("Sucesso", "Agendamento realizado com sucesso!");
-                router.replace("../(tabs)/inicio");
+                router.replace("/(tabs)/inicio");
               } else {
                 Alert.alert("Erro", data.message || "Erro ao agendar.");
               }

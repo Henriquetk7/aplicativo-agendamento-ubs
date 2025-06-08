@@ -90,7 +90,7 @@ export default function LoginScreen() {
             <ButtonComponent onPress={handleLogin} title="Entrar" />
 
             <TouchableOpacity
-              onPress={() => router.replace("../screens/CadastroScreen")}
+              onPress={() => router.replace("auth/screens/CadastroScreen")}
             >
               <Text style={styles.linkCadastro}>
                 Ainda não tem conta? Cadastrar-se

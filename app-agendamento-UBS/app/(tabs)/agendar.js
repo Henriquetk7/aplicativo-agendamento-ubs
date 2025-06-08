@@ -11,7 +11,7 @@ export default function Agendar() {
       <StatusBar style="auto" />
 
       <Text style={styles.text}>Selecione um posto de saude:</Text>
-      <ListaPostos onPressPosto={(id) => router.push(`../posto/${id}`)} />
+      <ListaPostos onPressPosto={(id) => router.push(`/posto/${id}`)} />
     </View>
   );
 }

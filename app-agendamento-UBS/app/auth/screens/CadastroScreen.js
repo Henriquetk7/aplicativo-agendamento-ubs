@@ -53,6 +53,7 @@ export default function CadastroScreen() {
     const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!emailValido) {
       Alert.alert("Erro", "E-mail inválido.");
+
       return;
     }
 
@@ -80,7 +81,8 @@ export default function CadastroScreen() {
       const data = await response.json();
 
       if (response.ok) {
-        router.replace("/login");
+        Alert.alert("Sucesso", "Use seu email e senha para entrar.");
+        router.replace("auth/screens/LoginScreen");
       } else {
         Alert.alert("Erro", data.message || "Erro ao cadastrar paciente");
       }
@@ -204,7 +206,7 @@ export default function CadastroScreen() {
           <ButtonComponent onPress={handleCadastro} title="Cadastrar-se" />
 
           <TouchableOpacity
-            onPress={() => router.replace("../screens/LoginScreen")}
+            onPress={() => router.replace("auth/screens/LoginScreen")}
           >
             <Text style={styles.linkLogin}>Já possui conta? Faça login</Text>
           </TouchableOpacity>
@@ -251,6 +253,7 @@ const styles = StyleSheet.create({
   inputSenha: {
     flexDirection: "row",
     alignItems: "center",
+    color: "#000",
   },
   mostrarSenha: {
     marginLeft: 8,

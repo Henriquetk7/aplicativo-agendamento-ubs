@@ -43,7 +43,6 @@ export default function Agendamento() {
       });
   }, [id]);
 
-  // Buscar horários com fichas restantes
   useEffect(() => {
     if (tipoSelecionado) {
       setLoadingHorarios(true);

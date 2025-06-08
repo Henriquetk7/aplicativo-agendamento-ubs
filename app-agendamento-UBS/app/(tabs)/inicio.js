@@ -78,7 +78,7 @@ export default function Inicio() {
                 Selecione um para realizar o agendamento
               </Text>
             </View>
-            <ListaPostos onPressPosto={(id) => router.push(`../posto/${id}`)} />
+            <ListaPostos onPressPosto={(id) => router.push(`/posto/${id}`)} />
           </View>
           <View style={[styles.containerSection, styles.sectionFaq]}>
             <Text style={[styles.titleSection, styles.titleFaq]}>
@@ -86,7 +86,7 @@ export default function Inicio() {
             </Text>
             <TouchableOpacity
               style={styles.containerCardFaq}
-              onPress={() => router.push("../screens/ajuda/item0")}
+              onPress={() => router.push("/screens/ajuda/item0")}
             >
               <View style={styles.cardFaq}>
                 <Image
@@ -100,7 +100,7 @@ export default function Inicio() {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.containerCardFaq}
-              onPress={() => router.push("../screens/ajuda/item1")}
+              onPress={() => router.push("/screens/ajuda/item1")}
             >
               <View style={styles.cardFaq}>
                 <Image
@@ -114,7 +114,7 @@ export default function Inicio() {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.containerCardFaq}
-              onPress={() => router.push("../screens/ajuda/item2")}
+              onPress={() => router.push("/screens/ajuda/item2")}
             >
               <View style={styles.cardFaq}>
                 <Image
@@ -128,7 +128,7 @@ export default function Inicio() {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.containerCardFaq}
-              onPress={() => router.push("../screens/ajuda/item3")}
+              onPress={() => router.push("/screens/ajuda/item3")}
             >
               <View style={styles.cardFaq}>
                 <Image
