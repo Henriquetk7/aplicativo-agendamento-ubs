@@ -1,9 +1,14 @@
 require("dotenv").config();
+
 const express = require("express");
+const cors = require("cors");
 const db = require("./db");
 
 const app = express();
-app.use(express.json());
+
+app.use(cors()); // é oq vai permitir requisições de outras origens (tal do CORS)
+app.use(express.json()); // vai pemitir receber JSON no corpo das  requisições tbm
+
 
 // =======================
 // WEB ADMIN - ROTAS
