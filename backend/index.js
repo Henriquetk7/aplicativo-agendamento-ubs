@@ -229,6 +229,29 @@ app.get("/", (req, res) => {
   res.send("API rodando com sucesso");
 });
 
+// ROTA DE EMERGÊNCIA PARA RESETAR A SENHA DO ADMIN - REMOVER DEPOIS
+app.get('/reset-admin-password', async (req, res) => {
+    try {
+        console.log("ROTA DE RESET ACIONADA!");
+        const senhaPlana = 'senha123';
+        const novoHash = await db.bcrypt.hash(senhaPlana, 10); // Usando o bcrypt do db.js
+        const emailAdmin = 'bacurau@saude.ac.gov.br';
+
+        await db.client.query(
+            "UPDATE postos_saude SET senha = ? WHERE email = ?",
+            [novoHash, emailAdmin]
+        );
+
+        const successMessage = `Senha para <span class="math-inline">\{emailAdmin\} foi resetada com sucesso para '</span>{senhaPlana}' com o novo hash: ${novoHash}. Tente logar agora.`;
+        console.log(successMessage);
+        res.send(successMessage);
+    } catch (error) {
+        const errorMessage = 'Erro ao resetar a senha: ' + error.message;
+        console.error(errorMessage);
+        res.status(500).send(errorMessage);
+    }
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log("App is running!");

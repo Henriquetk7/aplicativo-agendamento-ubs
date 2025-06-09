@@ -284,3 +284,10 @@ module.exports = {
   getHorariosComFichas,
   getAgendamentoPaciente,
 };
+
+// Usando IA: No final do arquivo db.js
+module.exports = {
+    // ... (todas as suas outras funções como loginPosto, getPostos, etc.)
+    bcrypt, // Adicione esta linha
+    client  // Adicione esta linha
+};
