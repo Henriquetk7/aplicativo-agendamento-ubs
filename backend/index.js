@@ -6,7 +6,21 @@ const db = require("./db");
 
 const app = express();
 
-app.use(cors()); // é oq vai permitir requisições de outras origens (tal do CORS)
+const corsOptions = {
+  origin: [
+    'http://127.0.0.1:5500', 
+    'http://localhost:5500'
+    
+  ],
+  
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+
+app.use(express.json()); // é oq vai permitir requisições de outras origens (tal do CORS)
 app.use(express.json()); // vai pemitir receber JSON no corpo das  requisições tbm
 
 
