@@ -6,13 +6,13 @@ const db = require("./db");
 
 const app = express();
 
+// --- Configuração do CORS ---
+// Define quais "origens" (sites) podem fazer requisições para esta API.
 const corsOptions = {
   origin: [
-    'http://127.0.0.1:5500', 
+    'http://127.0.0.1:5500',
     'http://localhost:5500'
-    
   ],
-  
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204
@@ -20,8 +20,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use(express.json()); // é oq vai permitir requisições de outras origens (tal do CORS)
-app.use(express.json()); // vai pemitir receber JSON no corpo das  requisições tbm
+// --- Body Parser ---
+// Middleware que permite o servidor entender o formato JSON enviado no corpo das requisições.
+app.use(express.json());
 
 
 // =======================
@@ -31,19 +32,19 @@ app.use(express.json()); // vai pemitir receber JSON no corpo das  requisições
 app.post("/posto/login", async (req, res) => {
   const { email, senha } = req.body;
   const resultado = await db.loginPosto(email, senha);
-  if (!resultado.success)
+  if (!resultado.success) {
     return res.status(401).json({ message: resultado.message });
-
+  }
   res.status(200).json({
     posto: resultado.posto,
   });
 });
 
 app.post("/posto/novoAgendamento", async (req, res) => {
-  const { id_tipo_atendimento, data_hora_agendamento, quantidade_fichas } =
-    req.body;
+  const { id_tipo_atendimento, data_hora_agendamento, quantidade_fichas } = req.body;
 
-  const id_posto_saude = req.posto.id_posto_saude; // Pega direto do token
+
+  const { id_posto_saude } = req.body;
 
   const resultado = await db.criarAgendamento({
     id_posto_saude,
@@ -52,11 +53,12 @@ app.post("/posto/novoAgendamento", async (req, res) => {
     quantidade_fichas,
   });
 
-  if (!resultado.success)
+  if (!resultado.success) {
     return res.status(500).json({ message: resultado.message });
-
+  }
   res.status(201).json({ message: resultado.message });
 });
+
 
 // =======================
 // APP MOBILE - ROTAS
