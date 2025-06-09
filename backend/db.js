@@ -16,13 +16,7 @@ let client;
 // WEB ADMIN
 // ==========================
 
-
 async function loginPosto(email, senha) {
-  console.log('-------------------------------------------');
-  console.log('Backend recebeu uma tentativa de login.');
-  console.log('Email recebido:', email);
-  console.log('Senha recebida:', senha);
-
   try {
     const [rows] = await client.query(
       "SELECT * FROM postos_saude WHERE email = ?",
@@ -30,25 +24,20 @@ async function loginPosto(email, senha) {
     );
 
     if (rows.length === 0) {
-      console.log('Resultado: Posto de saúde não encontrado no banco.');
-      console.log('-------------------------------------------');
       return { success: false, message: "Posto de saúde não encontrado." };
     }
 
     const posto = rows[0];
-    console.log('Hash da senha que está no banco:', posto.senha);
 
-    const senhaCorreta = await bcrypt.compare(senha, posto.senha);
-    console.log('Resultado da comparação (bcrypt.compare):', senhaCorreta); // Isso DEVE ser true
+    // SOLUÇÃO DE EMERGÊNCIA, apenas para apresentação
+    // Compara o texto da senha recebida com o texto salvo no banco.
+    const senhaCorreta = (senha === posto.senha);
 
     if (!senhaCorreta) {
-      console.log('Resultado: Senha incorreta.');
-      console.log('-------------------------------------------');
       return { success: false, message: "Senha incorreta." };
     }
 
-    console.log('Resultado: Login bem-sucedido!');
-    console.log('-------------------------------------------');
+    // Se a senha estiver correta, retorna sucesso.
     return {
       success: true,
       posto: {
@@ -58,8 +47,7 @@ async function loginPosto(email, senha) {
       },
     };
   } catch (error) {
-    console.error("Erro CRÍTICO na função loginPosto:", error);
-    console.log('-------------------------------------------');
+    console.error("Erro na função loginPosto:", error);
     return { success: false, message: "Erro no login." };
   }
 }
