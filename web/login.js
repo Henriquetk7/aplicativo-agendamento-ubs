@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = emailInput.value;
     const senha = senhaInput.value;
 
+    console.log('Enviando para a API:', { email, senha });
+
     try {
       const response = await fetch(`${config.BASE_URL}/posto/login`, {
         method: "POST",
