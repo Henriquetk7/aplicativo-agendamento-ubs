@@ -13,80 +13,6 @@ let client;
 })();
 
 // ==========================
-// WEB ADMIN
-// ==========================
-
-
-async function loginPosto(email, senha) {
-  console.log('-------------------------------------------');
-  console.log('Backend recebeu uma tentativa de login.');
-  console.log('Email recebido:', email);
-  console.log('Senha recebida:', senha);
-
-  try {
-    const [rows] = await client.query(
-      "SELECT * FROM postos_saude WHERE email = ?",
-      [email]
-    );
-
-    if (rows.length === 0) {
-      console.log('Resultado: Posto de saúde não encontrado no banco.');
-      console.log('-------------------------------------------');
-      return { success: false, message: "Posto de saúde não encontrado." };
-    }
-
-    const posto = rows[0];
-    console.log('Hash da senha que está no banco:', posto.senha);
-
-    const senhaCorreta = await bcrypt.compare(senha, posto.senha);
-    console.log('Resultado da comparação (bcrypt.compare):', senhaCorreta); // Isso DEVE ser true
-
-    if (!senhaCorreta) {
-      console.log('Resultado: Senha incorreta.');
-      console.log('-------------------------------------------');
-      return { success: false, message: "Senha incorreta." };
-    }
-
-    console.log('Resultado: Login bem-sucedido!');
-    console.log('-------------------------------------------');
-    return {
-      success: true,
-      posto: {
-        id: posto.id_posto_saude,
-        nome: posto.nome,
-        email: posto.email,
-      },
-    };
-  } catch (error) {
-    console.error("Erro CRÍTICO na função loginPosto:", error);
-    console.log('-------------------------------------------');
-    return { success: false, message: "Erro no login." };
-  }
-}
-
-async function criarAgendamento(agendamento) {
-  const values = [
-    agendamento.id_posto_saude,
-    agendamento.id_tipo_atendimento,
-    agendamento.data_hora_agendamento,
-    agendamento.quantidade_fichas,
-  ];
-
-  try {
-    await client.query(
-      `INSERT INTO agendamentos (id_posto_saude, id_tipo_atendimento, data_hora_agendamento, quantidade_fichas) 
-       VALUES (?, ?, ?, ?)`,
-      values
-    );
-
-    return { success: true, message: "Agendamento criado com sucesso." };
-  } catch (error) {
-    console.error("Erro ao criar agendamento:", error);
-    return { success: false, message: "Erro ao criar agendamento." };
-  }
-}
-
-// ==========================
 // APP MOBILE
 // ==========================
 async function cadastroPaciente(paciente) {
@@ -272,8 +198,6 @@ ORDER BY a.data_hora_agendamento ASC;`,
 // EXPORT
 // ==========================
 module.exports = {
-  loginPosto,
-  criarAgendamento,
   loginPaciente,
   cadastroPaciente,
   getPostos,
@@ -283,11 +207,4 @@ module.exports = {
   insertAgendamentoPaciente,
   getHorariosComFichas,
   getAgendamentoPaciente,
-};
-
-// Usando IA: No final do arquivo db.js
-module.exports = {
-    // ... (todas as suas outras funções como loginPosto, getPostos, etc.)
-    bcrypt, // Adicione esta linha
-    client  // Adicione esta linha
 };

@@ -1,64 +1,9 @@
 require("dotenv").config();
 
 const express = require("express");
-const cors = require("cors");
 const db = require("./db");
 
 const app = express();
-
-// --- Configuração do CORS ---
-// Define quais "origens" (sites) podem fazer requisições para esta API.
-const corsOptions = {
-  origin: [
-    'http://127.0.0.1:5500',
-    'http://localhost:5500'
-  ],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204
-};
-
-app.use(cors(corsOptions));
-
-// --- Body Parser ---
-// Middleware que permite o servidor entender o formato JSON enviado no corpo das requisições.
-app.use(express.json());
-
-
-// =======================
-// WEB ADMIN - ROTAS
-// =======================
-
-app.post("/posto/login", async (req, res) => {
-  const { email, senha } = req.body;
-  const resultado = await db.loginPosto(email, senha);
-  if (!resultado.success) {
-    return res.status(401).json({ message: resultado.message });
-  }
-  res.status(200).json({
-    posto: resultado.posto,
-  });
-});
-
-app.post("/posto/novoAgendamento", async (req, res) => {
-  const { id_tipo_atendimento, data_hora_agendamento, quantidade_fichas } = req.body;
-
-
-  const { id_posto_saude } = req.body;
-
-  const resultado = await db.criarAgendamento({
-    id_posto_saude,
-    id_tipo_atendimento,
-    data_hora_agendamento,
-    quantidade_fichas,
-  });
-
-  if (!resultado.success) {
-    return res.status(500).json({ message: resultado.message });
-  }
-  res.status(201).json({ message: resultado.message });
-});
-
 
 // =======================
 // APP MOBILE - ROTAS
@@ -227,29 +172,6 @@ app.get("/postos", async (req, res) => {
 
 app.get("/", (req, res) => {
   res.send("API rodando com sucesso");
-});
-
-// ROTA DE EMERGÊNCIA PARA RESETAR A SENHA DO ADMIN - REMOVER DEPOIS
-app.get('/reset-admin-password', async (req, res) => {
-    try {
-        console.log("ROTA DE RESET ACIONADA!");
-        const senhaPlana = 'senha123';
-        const novoHash = await db.bcrypt.hash(senhaPlana, 10); // Usando o bcrypt do db.js
-        const emailAdmin = 'bacurau@saude.ac.gov.br';
-
-        await db.client.query(
-            "UPDATE postos_saude SET senha = ? WHERE email = ?",
-            [novoHash, emailAdmin]
-        );
-
-        const successMessage = `Senha para <span class="math-inline">\{emailAdmin\} foi resetada com sucesso para '</span>{senhaPlana}' com o novo hash: ${novoHash}. Tente logar agora.`;
-        console.log(successMessage);
-        res.send(successMessage);
-    } catch (error) {
-        const errorMessage = 'Erro ao resetar a senha: ' + error.message;
-        console.error(errorMessage);
-        res.status(500).send(errorMessage);
-    }
 });
 
 const port = process.env.PORT || 3000;

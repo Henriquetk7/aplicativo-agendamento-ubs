@@ -5,7 +5,6 @@ Este projeto é um sistema integrado para facilitar o acesso da população aos 
 - 📱 Um **aplicativo mobile** para pacientes (desenvolvido em **React Native**)
 - 🌐 Uma **API REST** (desenvolvida em **Node.js**)
 - 🧠 Um **banco de dados MySQL**
-- 💻 Um **sistema web administrativo** (HTML, CSS e JavaScript puros)
 
 ---
 
@@ -22,7 +21,6 @@ O sistema tem como foco permitir que **pacientes localizem os postos de saúde m
 | Mobile              | React Native + Expo      |
 | Backend/API         | Node.js + Express        |
 | Banco de Dados      | MySQL                    |
-| Web Admin           | HTML + CSS + JS          |
 | Estado Global (App) | Zustand                  |
 | Armazenamento local | AsyncStorage             |
 | Máscaras de entrada | react-native-masked-text |
@@ -38,15 +36,7 @@ O sistema tem como foco permitir que **pacientes localizem os postos de saúde m
 - Localização automática via GPS
 - Exibição dos postos mais próximos por distância
 - Visualização de detalhes dos postos
-- Agendamento de atendimentos por especialidade
-- Consulta e cancelamento dos seus agendamentos
-
-### Administrador (Web)
-
-- Login no sistema administrativo
-- Cadastro e edição de postos de saúde
-- Gerenciamento de especialidades e horários
-- Lista de pacientes agendados por data
+- Agendamento de atendimentos
 
 ---
 
